@@ -5,13 +5,98 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-   <RelativeLayout
+
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="5dp"
+        app:srcCompat="@drawable/logo" />
+
+
+    <ImageView
+        android:id="@+id/backButton"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="@+id/profileCardView"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="84dp"
+        app:srcCompat="@drawable/back" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/profileCardView"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="70dp"
+        android:layout_marginStart="40dp"
+        app:cardCornerRadius="100dp"
+        android:elevation="10dp"
+        app:cardPreventCornerOverlap="false">
+        <ImageView
+            android:id="@+id/profilePic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/profpic"/>
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/profileCardView"
+        android:layout_marginStart="63dp"
+        android:layout_marginTop="75dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:textSize="15sp"
+        android:text="Looking for Pop-Rock guitar player"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/profileText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@id/profileCardView"
+        android:layout_marginStart="70dp"
+        android:layout_marginTop="95dp"
+        android:textSize="13sp"
+        android:textColor="@android:color/darker_gray"
+        android:text=" @IkrisBand"
+        android:textStyle="bold" />
+
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/postCardView"
+        android:layout_width="match_parent"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_height="250dp"
+        android:layout_marginTop="150dp"
+        app:cardCornerRadius="100dp"
+        android:elevation="10dp"
+        app:cardPreventCornerOverlap="false">
+        <ImageView
+            android:id="@+id/postPic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/post" />
+    </androidx.cardview.widget.CardView>
+
+
+
+    <RelativeLayout
        android:id="@+id/border"
        android:layout_width="match_parent"
        android:layout_height="0.5dp"
        android:background="@android:color/black"
        android:layout_alignParentBottom="true"
-       android:layout_marginBottom="57dp" />
+       android:layout_marginBottom="58dp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -25,5 +110,8 @@
         app:labelVisibilityMode="unlabeled">
 
     </com.google.android.material.bottomnavigation.BottomNavigationView>
+
+
+
 
 </RelativeLayout>

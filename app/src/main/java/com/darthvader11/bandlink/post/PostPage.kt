@@ -1,11 +1,14 @@
 package com.darthvader11.bandlink.post
 
+import android.content.res.Resources
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.darthvader11.bandlink.R
@@ -21,7 +24,6 @@ class PostPage : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelec
             R.id.btn_search -> {
                 Toast.makeText(this, "Search was pressed", Toast.LENGTH_SHORT).show()
                 val anim: Animation = AnimationUtils.loadAnimation(this, R.anim.bounce)
-                findViewById<ImageButton>(R.id.btn_search).startAnimation(anim)
             }
             R.id.btn_home ->
                 Toast.makeText(this, "Home was pressed", Toast.LENGTH_SHORT).show()
@@ -35,7 +37,6 @@ class PostPage : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelec
 
         return true;
     }
-
 
 
 
