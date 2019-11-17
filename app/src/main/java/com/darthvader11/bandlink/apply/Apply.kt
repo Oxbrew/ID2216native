@@ -1,4 +1,4 @@
-package com.darthvader11.bandlink.post
+package com.darthvader11.bandlink.apply
 
 import android.os.Bundle
 import android.view.Menu
@@ -9,13 +9,10 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.darthvader11.bandlink.R
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class PostPage : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener{
+class Apply : AppCompatActivity() {
 
-
-
-    override fun onNavigationItemSelected(p0: MenuItem): Boolean {
+     fun onNavigationItemSelected(p0: MenuItem): Boolean {
 
         when(p0.itemId){
             R.id.btn_search -> {
@@ -33,21 +30,17 @@ class PostPage : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelec
                 Toast.makeText(this, "You should not see this, it is a bug!", Toast.LENGTH_LONG).show()
         }
 
-        return true
+        return true;
     }
-
-
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_post)
-
-        findViewById<BottomNavigationView>(R.id.bottom_navigation).setOnNavigationItemSelectedListener(this)
+        setContentView(R.layout.activity_apply)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         return super.onCreateOptionsMenu(menu)
 
     }
+
 }

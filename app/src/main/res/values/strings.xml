@@ -9,4 +9,16 @@
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="title_activity_apply">Apply</string>
+    <!-- Strings related to Apply -->
+    <string name="experience_beginner">Beginner</string>
+    <string name="experience_advanced">Advanced</string>
+    <string name="experience_label">Experience: </string>
+    <string name="apply_page_apply_button">Apply!</string>
+    <string name="apply_page_apply_title">Apply</string>
+    <string name="apply_page_skills">Skills</string>
+    <string name="apply_page_Title_Placeholder">Looking for placeholder</string>
+    <string name="apply_page_SubTitle_Placeholder">NAME | VOTES | GENRE</string>
+    <string name="apply_page_Other">Other...</string>
+    <string name="apply_page_Text_Area">Additional Comments</string>
 </resources>
