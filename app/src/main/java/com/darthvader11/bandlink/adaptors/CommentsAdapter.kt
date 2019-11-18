@@ -3,9 +3,11 @@ package com.darthvader11.bandlink.adaptors
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.drawable.toDrawable
 import androidx.recyclerview.widget.RecyclerView
 import com.darthvader11.bandlink.R
 import com.darthvader11.bandlink.models.Comment
@@ -48,24 +50,13 @@ class CommentsAdapter(val context: Context, private val comments: List<Comment>)
 
             }
 
-            itemView.imgShare.setOnClickListener {
-
-                currentComment?.let {
-
-                    val intent = Intent()
-                    val message: String = "My hobby is " + currentComment!!.title
-                    intent.action = Intent.ACTION_SEND
-                    intent.putExtra(Intent.EXTRA_TEXT, message)
-                    intent.type = "text/plain"
-                    context.startActivity(Intent.createChooser(intent, "Share to: "))
-                }
-
-            }
         }
 
         fun setData(comment: Comment?, pos: Int) {
             comment?.let {
-                itemView.txtTitle.text = comment.title
+                itemView.txtProfile.text = comment.title
+                itemView.txtComment.text = comment.comment
+                itemView.profilePic.setImageResource(comment.drb)
             }
             this.currentComment = comment
             this.currentPosition = pos

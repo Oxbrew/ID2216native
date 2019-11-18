@@ -45,32 +45,32 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/txtTitlasdae"
+                android:id="@+id/txtProfile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:layout_marginStart="11dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="1dp"
                 android:layout_weight="1"
                 android:text="Title"
                 android:textColor="#616161"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txtTitle"
+                android:id="@+id/txtComment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
+                android:layout_below="@+id/txtProfile"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="1dp"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
                 android:text="Title"
                 android:textColor="#616161"
                 android:textSize="18sp"
-                android:textStyle="bold" />
+                />
 
 
         </RelativeLayout>

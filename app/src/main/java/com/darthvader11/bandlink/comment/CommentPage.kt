@@ -23,9 +23,9 @@ class CommentPage : AppCompatActivity() {
     private fun setupRecyclerView(){
         val layoutManager = LinearLayoutManager(this)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
-        recyclerView.layoutManager = layoutManager
+        recyclerComments.layoutManager = layoutManager
         val adapter = CommentsAdapter(this, Supplier.comments)
-        recyclerView.adapter = adapter
+        recyclerComments.adapter = adapter
 
     }
 

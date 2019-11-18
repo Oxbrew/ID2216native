@@ -4,9 +4,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_launcher_shareapp"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_launcher_shareapp_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".feed.Feed"></activity>
@@ -23,12 +23,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
+
         <activity android:name=".post.PostActivity" android:screenOrientation="portrait" />
-=======
-        <activity android:name=".post.PostPage" />
-        <activity android:name=".post.PostPage" android:screenOrientation="portrait" />
->>>>>>> 853cb00c170138c205e96fc690056994bc72a792
+
         <activity android:name=".comment.CommentPage" android:screenOrientation="portrait"/>
     </application>
 
