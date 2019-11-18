@@ -1,18 +1,16 @@
 package com.darthvader11.bandlink.post
 
-import android.content.res.Resources
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.ImageButton
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.darthvader11.bandlink.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import kotlinx.android.synthetic.main.activity_post.*
 
 class PostPage : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener{
 
@@ -43,12 +41,22 @@ class PostPage : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelec
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_post)
-
         findViewById<BottomNavigationView>(R.id.bottom_navigation).setOnNavigationItemSelectedListener(this)
+
+
+        btnShare!!.setOnClickListener {
+            val intent = Intent()
+            val message: String = "calincapitanu.com/Post.html"
+            intent.action = Intent.ACTION_SEND
+            intent.putExtra(Intent.EXTRA_TEXT, message)
+            intent.type = "text/plain"
+
+            startActivity(Intent.createChooser(intent, "Share to: "))
+        }
+
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         return super.onCreateOptionsMenu(menu)
-
     }
 }

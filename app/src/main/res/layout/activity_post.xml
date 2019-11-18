@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-
     <ImageView
+        android:contentDescription="title"
         android:id="@+id/imageView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,17 +14,18 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="2dp"
         android:layout_marginTop="5dp"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/logo"/>
 
 
     <ImageView
         android:id="@+id/backButton"
+        android:contentDescription="backButton"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_alignParentStart="@+id/profileCardView"
         android:layout_marginStart="6dp"
         android:layout_marginTop="84dp"
-        app:srcCompat="@drawable/back" />
+        app:srcCompat="@drawable/back"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/profileCardView"
@@ -37,6 +37,7 @@
         android:elevation="10dp"
         app:cardPreventCornerOverlap="false">
         <ImageView
+            android:contentDescription="profilepic"
             android:id="@+id/profilePic"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -77,26 +78,20 @@
         android:layout_marginEnd="10dp"
         android:layout_height="250dp"
         android:layout_marginTop="150dp"
-        app:cardCornerRadius="100dp"
+        app:cardCornerRadius="10dp"
         android:elevation="10dp"
         app:cardPreventCornerOverlap="false">
         <ImageView
+            android:contentDescription="postpi"
             android:id="@+id/postPic"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/post" />
+            app:srcCompat="@drawable/post"/>
     </androidx.cardview.widget.CardView>
 
 
 
-    <RelativeLayout
-       android:id="@+id/border"
-       android:layout_width="match_parent"
-       android:layout_height="0.5dp"
-       android:background="@android:color/black"
-       android:layout_alignParentBottom="true"
-       android:layout_marginBottom="58dp" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -107,11 +102,95 @@
         app:itemBackground="@color/navColor"
         app:itemTextColor="@android:color/black"
         app:itemIconTint="@android:color/black"
-        app:labelVisibilityMode="unlabeled">
+        app:labelVisibilityMode="unlabeled"/>
 
-    </com.google.android.material.bottomnavigation.BottomNavigationView>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_above="@+id/bottom_navigation"
+        android:layout_marginBottom="0dp"
+        android:background="@android:color/black" />
 
 
+
+    <Button
+        android:id="@+id/btnShare"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_below="@+id/postCardView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="231dp"
+        android:layout_marginTop="13dp"
+        android:layout_marginEnd="9dp"
+        android:layout_marginBottom="283dp"
+        android:text="Share"
+        android:textAlignment="center"
+        android:textSize="12sp" />
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/postCardView"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="43dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="186dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:paddingVertical="3.7dp"
+            android:text="@string/nr_likes"
+
+            />
+
+        <ImageView
+            android:id="@+id/imgLikes"
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:layout_below="@+id/postCardView"
+            android:layout_marginStart="60dp"
+            android:padding="2dp"
+            app:srcCompat="@drawable/hornsup" />
+
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/txtDescription"
+        android:layout_width="366dp"
+        android:layout_height="120dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="150dp"
+        android:textSize="15sp"
+        android:text="Our pop-rock band is looking for an intermediate guitar player with interests and skills to play covers also to improvise and
+compose similar music to: Leprous, Haken, Muse, Foo Fighters." />
+
+    <TextView
+        android:id="@+id/txtFixedLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="21dp"
+        android:layout_marginBottom="123dp"
+        android:text="Location:"
+        android:layout_alignStart="@+id/txtDescription"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/txtInputLoc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/txtFixedLocation"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="92dp"
+        android:layout_marginBottom="122dp"
+        android:text="@string/location" />
 
 
 </RelativeLayout>
