@@ -60,4 +60,8 @@
     <string name="feed_info_likes_3">300+ Likes</string>
     <string name="feed_info_likes_4">100+ Likes</string>
     <string name="feed_info_likes_5">3 Likes</string>
+    <string name="nr_likes">12</string>
+    <string name="post_description">Our pop-rock band is looking for an intermediate guitar player with interests and skills to play covers also to improvise and
+compose similar music to: Leprous, Haken, Muse, Foo Fighters.</string>
+    <string name="location">Stockholm, Sweden</string>
 </resources>

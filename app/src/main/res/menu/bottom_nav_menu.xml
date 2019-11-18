@@ -9,13 +9,13 @@
         android:enabled="true"
         android:icon="@drawable/home"
         android:title="Home"
-        app:actionViewClass="android.widget.ImageView"
         app:showAsAction="ifRoom"  />
 
     <item
         android:id="@+id/btn_search"
         android:enabled="true"
         android:icon="@drawable/search"
+        app:actionViewClass="android.widget.ImageView"
         android:title="Search"
         app:showAsAction="ifRoom" />
     <item
