@@ -13,7 +13,7 @@ import com.darthvader11.bandlink.R
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_post.*
 
-class PostPage : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener{
+class PostActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener{
 
 
 

@@ -9,7 +9,6 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.MenuItem
 import android.view.View
 import android.view.Window
 import android.view.inputmethod.EditorInfo
@@ -20,8 +19,6 @@ import android.widget.Toast
 
 
 import com.darthvader11.bandlink.R
-
-import com.google.android.material.navigation.NavigationView
 
 class LoginActivity : AppCompatActivity() {
 
@@ -101,7 +98,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             login.setOnClickListener {
-                val intent = Intent(context , com.darthvader11.bandlink.post.PostPage::class.java)
+                val intent = Intent(context , com.darthvader11.bandlink.post.PostActivity::class.java)
                 startActivity(intent)
                 //loading.visibility = View.VISIBLE
                 //loginViewModel.login(username.text.toString(), password.text.toString())

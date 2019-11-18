@@ -12,7 +12,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="2dp"
+        android:paddingHorizontal="75dp"
+
         android:layout_marginTop="5dp"
         app:srcCompat="@drawable/logo"/>
 
