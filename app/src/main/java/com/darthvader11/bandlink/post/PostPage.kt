@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.Window
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.Toast
@@ -40,6 +41,7 @@ class PostPage : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelec
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_post)
         findViewById<BottomNavigationView>(R.id.bottom_navigation).setOnNavigationItemSelectedListener(this)
 
@@ -53,6 +55,14 @@ class PostPage : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelec
 
             startActivity(Intent.createChooser(intent, "Share to: "))
         }
+
+        btnComment.setOnClickListener {
+            val intent = Intent(this , com.darthvader11.bandlink.comment.CommentPage::class.java)
+            startActivity(intent)
+        }
+
+
+
 
     }
 

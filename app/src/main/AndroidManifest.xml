@@ -18,7 +18,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".post.PostPage"/>
+        <activity android:name=".post.PostPage" android:screenOrientation="portrait" />
+        <activity android:name=".comment.CommentPage" android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

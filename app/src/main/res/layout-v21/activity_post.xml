@@ -3,7 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:theme="@android:style/Theme.Material.Light.NoActionBar.Fullscreen">
 
     <ImageView
         android:contentDescription="title"
@@ -162,12 +163,11 @@
         android:id="@+id/txtDescription"
         android:layout_width="366dp"
         android:layout_height="120dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerInParent="true"
-        android:layout_marginBottom="150dp"
-        android:textSize="15sp"
-        android:text="Our pop-rock band is looking for an intermediate guitar player with interests and skills to play covers also to improvise and
-compose similar music to: Leprous, Haken, Muse, Foo Fighters." />
+        android:layout_below="@+id/postCardView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="61dp"
+        android:text="@string/post_description"
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/txtFixedLocation"
@@ -191,6 +191,37 @@ compose similar music to: Leprous, Haken, Muse, Foo Fighters." />
         android:layout_marginStart="92dp"
         android:layout_marginBottom="122dp"
         android:text="@string/location" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="75dp"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/btnLike"
+            android:padding="5dp"
+            android:text="Like"
+            android:layout_weight="1.0"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"/>
+        <Button
+            android:id="@+id/btnComment"
+            android:padding="5dp"
+            android:text="Comment"
+            android:layout_weight="1.0"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"/>
+        <Button
+            android:id="@+id/btnAppls"
+            android:padding="5dp"
+            android:text="Apply"
+            android:layout_weight="1.0"
+            android:layout_width="120dp"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
 
 
 </RelativeLayout>
