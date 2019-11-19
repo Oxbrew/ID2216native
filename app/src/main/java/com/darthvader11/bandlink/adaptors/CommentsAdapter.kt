@@ -2,12 +2,9 @@ package com.darthvader11.bandlink.adaptors
 
 
 import android.content.Context
-import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.graphics.drawable.toDrawable
 import androidx.recyclerview.widget.RecyclerView
 import com.darthvader11.bandlink.R
 import com.darthvader11.bandlink.models.Comment
@@ -17,10 +14,6 @@ import kotlinx.android.synthetic.main.comment_item.view.*
 
 class CommentsAdapter(val context: Context, private val comments: List<Comment>) :
     RecyclerView.Adapter<CommentsAdapter.MyViewHolder>() {
-
-    companion object{
-        val TAG: String = CommentsAdapter::class.java.simpleName
-    }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val comment = comments[position]

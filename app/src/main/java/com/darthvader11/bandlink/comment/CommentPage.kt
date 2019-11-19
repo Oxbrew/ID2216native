@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.darthvader11.bandlink.R
 import com.darthvader11.bandlink.adaptors.CommentsAdapter
+import com.darthvader11.bandlink.adaptors.SuggestionsAdapter
 import com.darthvader11.bandlink.models.Supplier
+import com.darthvader11.bandlink.models.Supplier2
 import kotlinx.android.synthetic.main.activity_comment.*
 
 class CommentPage : AppCompatActivity() {
@@ -26,6 +28,13 @@ class CommentPage : AppCompatActivity() {
         recyclerComments.layoutManager = layoutManager
         val adapter = CommentsAdapter(this, Supplier.comments)
         recyclerComments.adapter = adapter
+
+        val layoutManager2 = LinearLayoutManager(this)
+        layoutManager2.orientation = LinearLayoutManager.VERTICAL
+        recyclerSuggestions.layoutManager = layoutManager2
+        val adapter2 = SuggestionsAdapter(this, Supplier2.suggestions)
+        recyclerSuggestions.adapter = adapter2
+
 
     }
 

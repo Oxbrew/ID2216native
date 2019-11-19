@@ -25,8 +25,12 @@ class PostActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
                 Toast.makeText(this, "Search was pressed", Toast.LENGTH_SHORT).show()
                 val anim: Animation = AnimationUtils.loadAnimation(this, R.anim.bounce)
             }
-            R.id.btn_home ->
+            R.id.btn_home ->{
+                val intent = Intent(this , Feed::class.java)
+                startActivity(intent)
                 Toast.makeText(this, "Home was pressed", Toast.LENGTH_SHORT).show()
+            }
+
             R.id.btn_messages ->
                 Toast.makeText(this, "Messages was pressed", Toast.LENGTH_SHORT).show()
             R.id.btn_profile ->
@@ -44,6 +48,8 @@ class PostActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemS
         super.onCreate(savedInstanceState)
         this.requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_post)
+
+
         findViewById<BottomNavigationView>(R.id.bottom_navigation).setOnNavigationItemSelectedListener(this)
 
         btnShare!!.setOnClickListener {

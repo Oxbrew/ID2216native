@@ -32,7 +32,7 @@
                 android:contentDescription="profilepic"
                 android:id="@+id/profilePic"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="40dp"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/profpic"/>
 
@@ -46,7 +46,7 @@
 
             <TextView
                 android:id="@+id/txtProfile"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
@@ -59,15 +59,15 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/txtComment"
-                android:layout_width="wrap_content"
+                android:id="@+id/txtSuggestion"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/txtProfile"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="1dp"
                 android:layout_marginEnd="10dp"
                 android:layout_weight="1"
-                android:text="Titleeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+                android:text="Titleaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaassssssssssssssssssssssssssssssssssssssssssssss"
                 android:textColor="#616161"
                 android:textSize="18sp"
                 />
