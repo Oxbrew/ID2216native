@@ -34,5 +34,11 @@ app:startDestination="@+id/navigation_home">
         android:label="Comments"
         tools:layout="@layout/fragment_comments" />
 
+    <fragment
+        android:id="@+id/navigation_newpost"
+        android:name="com.darthvader11.bandlink.ui.newpost.NewpostFragment"
+        android:label="Newpost"
+        tools:layout="@layout/fragment_newpost" />
+
 
 </navigation>
