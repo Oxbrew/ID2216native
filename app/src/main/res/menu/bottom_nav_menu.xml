@@ -5,27 +5,27 @@
 
 
     <item
-        android:id="@+id/btn_home"
+        android:id="@+id/navigation_home"
         android:enabled="true"
         android:icon="@drawable/home"
         android:title="Home"
         app:showAsAction="ifRoom"  />
 
     <item
-        android:id="@+id/btn_search"
+        android:id="@+id/navigation_search"
         android:enabled="true"
         android:icon="@drawable/search"
         app:actionViewClass="android.widget.ImageView"
         android:title="Search"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/btn_messages"
+        android:id="@+id/navigation_messages"
         android:enabled="true"
         android:icon="@drawable/messages"
         android:title="Messages"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/btn_profile"
+        android:id="@+id/navigation_profile"
         android:enabled="true"
         android:icon="@drawable/profile"
         android:title="Profile"

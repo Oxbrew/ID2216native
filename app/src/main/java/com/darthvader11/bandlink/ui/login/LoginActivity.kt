@@ -98,7 +98,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             login.setOnClickListener {
-                val intent = Intent(context , com.darthvader11.bandlink.post.PostActivity::class.java)
+                val intent = Intent(context , com.darthvader11.bandlink.MainActivity::class.java)
                 startActivity(intent)
                 //loading.visibility = View.VISIBLE
                 //loginViewModel.login(username.text.toString(), password.text.toString())
