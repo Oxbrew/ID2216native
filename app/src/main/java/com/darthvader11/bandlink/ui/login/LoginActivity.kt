@@ -29,8 +29,10 @@ class LoginActivity : AppCompatActivity() {
         this.requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_login)
 
+        val intent = Intent(this , com.darthvader11.bandlink.MainActivity::class.java)
+        startActivity(intent)
 
-        val username = findViewById<EditText>(R.id.username)
+        /*val username = findViewById<EditText>(R.id.username)
         val password = findViewById<EditText>(R.id.password)
         val login = findViewById<Button>(R.id.login)
         val loading = findViewById<ProgressBar>(R.id.loading)
@@ -104,6 +106,7 @@ class LoginActivity : AppCompatActivity() {
                 //loginViewModel.login(username.text.toString(), password.text.toString())
             }
         }
+      */
 
 
 

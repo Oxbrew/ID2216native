@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.Window
 import androidx.appcompat.app.AppCompatActivity
-import com.darthvader11.bandlink.R
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.android.synthetic.main.activity_post.*
 
 class PostActivity : AppCompatActivity(){
@@ -31,7 +29,7 @@ class PostActivity : AppCompatActivity(){
         }
 
         btnComment.setOnClickListener {
-            val intent = Intent(this , com.darthvader11.bandlink.comment.CommentPage::class.java)
+            val intent = Intent(this , com.darthvader11.bandlink.ui.comment.CommentPage::class.java)
             startActivity(intent)
         }
 

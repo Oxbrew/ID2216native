@@ -5,27 +5,34 @@ xmlns:tools="http://schemas.android.com/tools"
 android:id="@+id/mobile_navigation"
 app:startDestination="@+id/navigation_home">
 
-<fragment
-    android:id="@+id/navigation_home"
-    android:name="com.darthvader11.bandlink.ui.home.HomeFragment"
-    android:label="@string/title_home"
-    tools:layout="@layout/fragment_home" />
+    <fragment
+        android:id="@+id/navigation_home"
+        android:name="com.darthvader11.bandlink.ui.home.HomeFragment"
+        android:label="@string/title_home"
+        tools:layout="@layout/fragment_home" />
 
-<fragment
-    android:id="@+id/navigation_search"
-    android:name="com.darthvader11.bandlink.ui.search.SearchFragment"
-    android:label="@string/title_search"
-    tools:layout="@layout/fragment_search" />
+    <fragment
+        android:id="@+id/navigation_search"
+        android:name="com.darthvader11.bandlink.ui.search.SearchFragment"
+        android:label="@string/title_search"
+        tools:layout="@layout/fragment_search" />
 
-<fragment
-    android:id="@+id/navigation_messages"
-    android:name="com.darthvader11.bandlink.ui.messages.MessagesFragment"
-    android:label="@string/title_messages"
-    tools:layout="@layout/fragment_messages" />
-
+    <fragment
+        android:id="@+id/navigation_messages"
+        android:name="com.darthvader11.bandlink.ui.messages.MessagesFragment"
+        android:label="@string/title_messages"
+        tools:layout="@layout/fragment_messages" />
     <fragment
         android:id="@+id/navigation_profile"
         android:name="com.darthvader11.bandlink.ui.profile.ProfileFragment"
         android:label="@string/title_profile"
         tools:layout="@layout/fragment_profile" />
+
+    <fragment
+        android:id="@+id/navigation_comments"
+        android:name="com.darthvader11.bandlink.ui.comment.CommentsFragment"
+        android:label="Comments"
+        tools:layout="@layout/fragment_comments" />
+
+
 </navigation>

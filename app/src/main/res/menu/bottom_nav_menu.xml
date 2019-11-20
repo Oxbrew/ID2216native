@@ -15,7 +15,6 @@
         android:id="@+id/navigation_search"
         android:enabled="true"
         android:icon="@drawable/search"
-        app:actionViewClass="android.widget.ImageView"
         android:title="Search"
         app:showAsAction="ifRoom" />
     <item

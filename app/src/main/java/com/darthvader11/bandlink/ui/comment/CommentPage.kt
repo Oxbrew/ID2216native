@@ -1,4 +1,4 @@
-package com.darthvader11.bandlink.comment
+package com.darthvader11.bandlink.ui.comment
 
 import android.os.Bundle
 import android.view.Window
@@ -15,6 +15,7 @@ class CommentPage : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         this.requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.activity_comment)
 

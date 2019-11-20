@@ -22,7 +22,7 @@
 
         <activity android:name=".post.PostActivity" android:screenOrientation="portrait" />
 
-        <activity android:name=".comment.CommentPage" android:screenOrientation="portrait"/>
+        <activity android:name="com.darthvader11.bandlink.ui.comment.CommentPage" android:screenOrientation="portrait"/>
         <activity android:name=".MainActivity" android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
