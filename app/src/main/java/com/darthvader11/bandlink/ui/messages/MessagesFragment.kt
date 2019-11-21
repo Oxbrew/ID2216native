@@ -1,7 +1,10 @@
 package com.darthvader11.bandlink.ui.messages
 
 import android.graphics.Color
+import android.graphics.Typeface
 import android.graphics.drawable.ClipDrawable.HORIZONTAL
+import android.graphics.fonts.Font
+import android.graphics.fonts.FontStyle
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -72,30 +75,34 @@ class MessagesFragment : Fragment() {
         val editText = editTextofMessageSearch
         editText.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
-            }
 
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 val invisibleSearchView = invisibleSearchView
-                invisibleSearchView.setBackgroundColor(Color.BLUE)
+                invisibleSearchView.setBackgroundColor(Color.GRAY)
                 invisibleSearchView.isVisible = true
 
                 messagePreviewAdapter.items.forEach { element ->
                     p0?.let {
-                        if(element.senderName.length >= p0.length){
+                        if(element.senderName.length >= p0.length && p0.isNotEmpty() ){
                             if ((element.senderName.subSequence(0,p0.length)).toString().equals(p0.subSequence(0,p0.length).toString(), ignoreCase = true)) {
 
-                                println("ananin ami")
-
-
+                                val textView = TextView(activity)
+                                textView.setTextSize(20.0.toFloat())
+                                textView.text = element.senderName
+                                invisibleSearchView.addView(textView)
                             }
                         }
                     }
                 }
             }
-        })
 
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val invisibleView = invisibleSearchView
+                invisibleView.removeAllViewsInLayout()
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+        })
     }
 }
