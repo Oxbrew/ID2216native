@@ -28,10 +28,6 @@ class PostActivity : AppCompatActivity(){
             startActivity(Intent.createChooser(intent, "Share to: "))
         }
 
-        btnComment.setOnClickListener {
-            val intent = Intent(this , com.darthvader11.bandlink.ui.comment.CommentPage::class.java)
-            startActivity(intent)
-        }
 
     }
 

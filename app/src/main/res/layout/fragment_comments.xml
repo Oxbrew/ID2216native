@@ -49,6 +49,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="300dp"
                 android:layout_weight="1.0"
+                android:id="@+id/inputComment"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp" />
 
@@ -60,6 +61,7 @@
                 android:scaleType="centerCrop"
                 android:contentDescription="send_button"
                 android:backgroundTint="@color/backgroundAddComment"
+                android:id="@+id/sendComment"
             />
 
         </LinearLayout>

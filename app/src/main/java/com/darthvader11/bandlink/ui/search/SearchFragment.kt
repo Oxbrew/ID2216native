@@ -6,16 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.TextView
+import android.widget.ImageView
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import com.darthvader11.bandlink.R
 import com.darthvader11.bandlink.models.Supplier
 import com.darthvader11.bandlink.ui.comment.CommentsFragment
+import com.darthvader11.bandlink.ui.home.HomeFragment
 import com.darthvader11.bandlink.ui.newpost.NewpostFragment
 
 class SearchFragment : Fragment(), View.OnClickListener {
@@ -35,14 +35,20 @@ class SearchFragment : Fragment(), View.OnClickListener {
         btnShare.setOnClickListener(this)
         val btnApply : Button = root.findViewById(R.id.btnApply)
         btnApply.setOnClickListener(this)
+        val backButton : ImageView = root.findViewById(R.id.backButton)
+        backButton.setOnClickListener(this)
 
         Supplier.comments[1].comment = "This has been changed hahaa" //Testing
+
 
         return root
     }
 
     override fun onClick(v: View?) {
         when (v?.id){
+            R.id.backButton -> {
+                fragmentManager?.popBackStack()
+            }
             R.id.btnComment -> {
                 Toast.makeText(context, "DIZ WORKS", Toast.LENGTH_SHORT).show()
                 val manager: FragmentManager? = fragmentManager
