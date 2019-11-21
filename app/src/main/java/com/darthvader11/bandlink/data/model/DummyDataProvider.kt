@@ -8,43 +8,25 @@ class DummyDataProvider {
 
             val list = ArrayList<MessagePreview>()
             list.add(
-                MessagePreview(null, "Metallica", "Naber la koftehorlar")
+                MessagePreview(null, "Metallica", "We are the best")
             )
             list.add(
-                MessagePreview(null, "Metallica", "Naber la koftehorlar")
+                MessagePreview(null, "Pink Floyd", "No we are the best")
             )
             list.add(
-                MessagePreview(null, "Metallica", "Naber la koftehorlar")
+                MessagePreview(null, "Death Blade", "very much no we are the best and there no way in the whole world to change this so therefore stop calling us")
             )
             list.add(
-                MessagePreview(null, "Metallica", "Naber la koftehorlar")
+                MessagePreview(null, "Iron Maiden", "very much no we are the best")
             )
             list.add(
-                MessagePreview(null, "Metallica", "Naber la koftehorlar")
+                MessagePreview(null, "Queen", "Hello form the other side")
             )
             list.add(
-                MessagePreview(null, "Metallica", "Naber la koftehorlar")
+                MessagePreview(null, "Guns and Roses", "Axl is the best okay")
             )
             list.add(
-                MessagePreview(null, "Metallica", "Naber la koftehorlar")
-            )
-            list.add(
-                MessagePreview(null, "Metallica", "Naber la koftehorlar")
-            )
-            list.add(
-                MessagePreview(null, "Metallica", "Naber la koftehorlar")
-            )
-            list.add(
-                MessagePreview(null, "Metallica", "Naber la koftehorlar")
-            )
-            list.add(
-                MessagePreview(null, "Metallica", "Naber la koftehorlar")
-            )
-            list.add(
-                MessagePreview(null, "Metallica", "Naber la koftehorlar")
-            )
-            list.add(
-                MessagePreview(null, "Metallica", "Naber la koftehorlar")
+                MessagePreview(null, "Black Sabbath", "We conquer")
             )
             return list
         }

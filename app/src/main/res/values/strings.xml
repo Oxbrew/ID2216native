@@ -73,5 +73,6 @@ compose similar music to: Leprous, Haken, Muse, Foo Fighters.</string>
     <!-- Strings related to Messages -->
     <string name="searchBoxDescription">Search Bands or Musicians</string>
     <string name="action_settings">Settings</string>
+    <string name="message_box_action_bar">Message Box</string>
 
 </resources>

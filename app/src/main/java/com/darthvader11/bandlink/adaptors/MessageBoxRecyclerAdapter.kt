@@ -13,7 +13,8 @@ import kotlinx.android.synthetic.main.message_box_list_item.view.*
 
 class MessageBoxRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var items: List<MessagePreview> = ArrayList()
+    var items: List<MessagePreview> = ArrayList()
+        private set
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
