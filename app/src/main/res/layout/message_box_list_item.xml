@@ -13,20 +13,30 @@
         android:layout_height="100dp"
         android:layout_width="match_parent">
 
-        <androidx.cardview.widget.CardView
-            android:id="@+id/postCardView"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:cardCornerRadius="50dp"
+        <LinearLayout
+            android:id="@+id/profile_picture_container"
             android:layout_width="100dp"
-            android:layout_height="100dp">
-            <ImageView
-                android:id="@+id/profile_picture"
-                android:layout_height="100dp"
-                android:layout_width="100dp"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-        </androidx.cardview.widget.CardView>
+            android:layout_height="100dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/postCardView"
+                app:cardCornerRadius="35dp"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginRight="15dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginBottom="15dp"
+                android:layout_marginTop="15dp">
+
+                <ImageView
+                    android:layout_gravity="center"
+                    android:id="@+id/profile_picture"
+                    android:layout_height="70dp"
+                    android:layout_width="70dp"/>
+            </androidx.cardview.widget.CardView>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/sender_name"
@@ -37,7 +47,7 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             app:layout_constraintHeight_percent="0.5"
-            app:layout_constraintLeft_toRightOf="@id/postCardView"
+            app:layout_constraintLeft_toRightOf="@id/profile_picture_container"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>
 
@@ -50,7 +60,7 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             app:layout_constraintHeight_percent="0.5"
-            app:layout_constraintLeft_toRightOf="@id/postCardView"
+            app:layout_constraintLeft_toRightOf="@id/profile_picture_container"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
 

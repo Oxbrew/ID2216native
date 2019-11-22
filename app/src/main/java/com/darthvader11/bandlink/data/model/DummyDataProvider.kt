@@ -26,7 +26,7 @@ class DummyDataProvider {
                 MessagePreview(null, "Guns and Roses", "Axl is the best okay")
             )
             list.add(
-                MessagePreview(null, "Black Sabbath", "We conquer")
+                MessagePreview(null, "Panther Sabbath", "We conquer")
             )
             return list
         }

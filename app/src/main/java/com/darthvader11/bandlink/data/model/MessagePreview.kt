@@ -1,6 +1,7 @@
 package com.example.messagebox.Model
 
 import android.media.Image
+import java.util.*
 
 class MessagePreview(profile: Image?, name: String, message: String) {
 
