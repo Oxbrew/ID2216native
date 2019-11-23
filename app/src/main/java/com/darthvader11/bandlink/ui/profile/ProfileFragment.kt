@@ -13,6 +13,8 @@ import androidx.fragment.app.FragmentTransaction
 import com.darthvader11.bandlink.R
 import com.darthvader11.bandlink.ui.comment.PostlistFragment
 import kotlinx.android.synthetic.main.fragment_profile.*
+import android.content.Intent
+import android.net.Uri
 
 class ProfileFragment : Fragment(), View.OnClickListener {
 
@@ -30,6 +32,12 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         backButton.setOnClickListener(this)
         val btnPosts: Button = root.findViewById(R.id.btnPosts)
         btnPosts.setOnClickListener(this)
+        val btnInstagram : ImageView = root.findViewById(R.id.btnInstagram)
+        btnInstagram .setOnClickListener(this)
+        val btnYoutube : ImageView = root.findViewById(R.id.btnYoutube)
+        btnYoutube.setOnClickListener(this)
+        val btnSpotify : ImageView = root.findViewById(R.id.btnSpotify)
+        btnSpotify.setOnClickListener(this)
         return root
     }
 
@@ -44,6 +52,25 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                 val rating = "Rating :" +  ratingBar.rating
                 Toast.makeText(context, rating, Toast.LENGTH_SHORT).show()
 
+            }
+
+                R.id.btnInstagram -> {
+                val webIntent: Intent = Uri.parse("http://www.Instagram.com").let {
+                        webpage -> Intent(Intent.ACTION_VIEW, webpage)
+                }
+                startActivity(webIntent)
+            }
+            R.id.btnYoutube -> {
+                val webIntent: Intent = Uri.parse("http://www.youtube.com").let {
+                        webpage -> Intent(Intent.ACTION_VIEW, webpage)
+                }
+                startActivity(webIntent)
+            }
+            R.id.btnSpotify -> {
+                val webIntent: Intent = Uri.parse("http://www.spotify.com").let {
+                        webpage -> Intent(Intent.ACTION_VIEW, webpage)
+                }
+                startActivity(webIntent)
             }
 
             R.id.btnPosts -> {
