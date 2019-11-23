@@ -1,4 +1,4 @@
-package com.darthvader11.bandlink.feed
+package com.darthvader11.bandlink.ui.feed
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
