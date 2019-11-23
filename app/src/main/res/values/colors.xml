@@ -4,5 +4,6 @@
     <color name="colorPrimaryDark">#000000</color>
     <color name="colorAccent">#850C0C</color>
     <color name="navColor">#fdfdfd</color>
-    <color name="backgroundAddComment">#D6D6D6</color>
+    <color name="backgroundAddComment">#DADADA</color>
+    <color name="gold">#F3C729</color>
 </resources>

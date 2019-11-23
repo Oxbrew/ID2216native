@@ -40,5 +40,11 @@ app:startDestination="@+id/navigation_home">
         android:label="Newpost"
         tools:layout="@layout/fragment_newpost" />
 
+    <fragment
+        android:id="@+id/navigation_post"
+        android:name="com.darthvader11.bandlink.ui.post.PostFragment"
+        android:label="Post"
+        tools:layout="@layout/fragment_post" />
+
 
 </navigation>
