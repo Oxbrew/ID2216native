@@ -7,17 +7,15 @@
     android:gravity="center">
 
 
+
     <ImageView
-        android:id="@+id/logo"
-        android:layout_width="match_parent"
-        android:layout_height="33dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="5dp"
         android:contentDescription="titleImg"
-        android:layout_weight="1"
-        android:layout_gravity="left"
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:paddingHorizontal="75dp"
-        app:srcCompat="@drawable/logo" />
+        android:layout_marginTop="5dp"
+        app:srcCompat="@drawable/logo"/>
 
     <ImageButton
         android:id="@+id/createPost"
