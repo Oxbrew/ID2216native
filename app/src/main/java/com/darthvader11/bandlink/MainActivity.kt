@@ -4,6 +4,7 @@ package com.darthvader11.bandlink
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
+import android.widget.Button
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -23,6 +24,10 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
         this.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
         this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+
+
+
     }
+
 
 }

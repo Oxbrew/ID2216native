@@ -3,13 +3,15 @@
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in">Log in</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">"Welcome !"</string>
     <string name="invalid_username">Not a valid username</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="title_activity_apply">Apply</string>
+    <string name="register">Don\'t have an account?</string>
+    <string name="signup">Register</string>
     <!-- Strings related to Apply -->
     <string name="experience_beginner">Beginner</string>
     <string name="experience_advanced">Advanced</string>
@@ -39,8 +41,8 @@
     <string name="feed_info_4">Wayne Rodney | 100+ Likes | Pop</string>
     <string name="feed_info_5">Xavier Yalip | 3 Likes | Classical</string>
     <string name="feed_info_6">Jonah Relie | 50+ Likes | Hiphop</string>
-    <string name="feed_info_7">Xavier Yalip | 100+ Likes | GIG</string>
-    <string name="feed_info_8">Xavier Yalip | 50+ Likes | Jazz</string>
+    <string name="feed_info_7">Sailors Tavern | 100+ Likes | GIG</string>
+    <string name="feed_info_8">Otis Ford | 50+ Likes | Jazz</string>
     <string name="feed_info_name_1">John Appleseed</string>
     <string name="feed_info_name_2">Anne Cherrytree</string>
     <string name="feed_info_name_3">Ikrisband</string>
@@ -69,6 +71,6 @@ compose similar music to: Leprous, Haken, Muse, Foo Fighters.</string>
     <string name="title_search">Search</string>
     <string name="title_messages">Messages</string>
     <string name="title_profile">Profile</string>
-    <string name="profile_description">Lead Siger in IkrisBand</string>
+    <string name="profile_description">Lead Singer in IkrisBand</string>
 
 </resources>
