@@ -30,9 +30,9 @@ class SearchFragment : Fragment(), View.OnClickListener {
         val root = inflater.inflate(R.layout.fragment_search, container, false)
         recyclerSearch = root.findViewById(R.id.recyclerSearch)
 
-        val sendSearch : ImageButton = root.findViewById(R.id.sendSearch)
+        val sendSearch: ImageButton = root.findViewById(R.id.sendSearch)
         sendSearch.setOnClickListener(this)
-        val logoSearch : ImageView = root.findViewById(R.id.logoSearch)
+        val logoSearch: ImageView = root.findViewById(R.id.logoSearch)
         logoSearch.setOnClickListener(this)
 
 
@@ -40,7 +40,7 @@ class SearchFragment : Fragment(), View.OnClickListener {
 
     }
 
-    private fun setupRecyclerView(recyclerSearch: RecyclerView){
+    private fun setupRecyclerView(recyclerSearch: RecyclerView) {
 
 
         val layoutManager = LinearLayoutManager(context)
@@ -50,11 +50,10 @@ class SearchFragment : Fragment(), View.OnClickListener {
         recyclerSearch.adapter = adapter
 
 
-
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
+        when (v?.id) {
             R.id.sendSearch -> {
                 setupRecyclerView(recyclerSearch)
                 inputSearch.setText("")
@@ -63,13 +62,18 @@ class SearchFragment : Fragment(), View.OnClickListener {
             R.id.logoSearch -> {
                 val manager: FragmentManager? = fragmentManager
                 val transaction: FragmentTransaction? = manager?.beginTransaction()
-                transaction?.replace(R.id.nav_host_fragment, PostFragment() , PostFragment::class.java.simpleName  )
+                transaction?.replace(
+                    R.id.nav_host_fragment,
+                    PostFragment(),
+                    PostFragment::class.java.simpleName
+                )
                 transaction?.addToBackStack(null)
                 transaction?.commit()
 
+            }
+
         }
 
+
     }
-
-
 }

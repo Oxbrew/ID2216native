@@ -6,21 +6,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.ImageView
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.darthvader11.bandlink.R
 import com.darthvader11.bandlink.models.Post
-import com.darthvader11.bandlink.models.Supplier
-import com.darthvader11.bandlink.showToast
-import com.darthvader11.bandlink.ui.comment.CommentsFragment
-import com.darthvader11.bandlink.ui.search.SearchFragment
-import kotlinx.android.synthetic.main.comment_item.view.*
-import kotlinx.android.synthetic.main.comment_item.view.profilePic
-import kotlinx.android.synthetic.main.comment_item.view.txtProfile
+
 import kotlinx.android.synthetic.main.postlist_item.view.*
 
 
