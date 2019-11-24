@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.darthvader11.bandlink.R
+import com.darthvader11.bandlink.ui.messages.MessagesFragment
 import com.example.messagebox.Model.MessagePreview
 import kotlinx.android.synthetic.main.message_box_list_item.view.*
 

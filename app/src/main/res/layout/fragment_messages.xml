@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/constraintLayout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -47,7 +48,7 @@
             android:textIsSelectable="true"
             android:paddingStart="30dp"
             android:paddingEnd="10dp"
-            android:cursorVisible="true" />
+            android:cursorVisible="true"/>
     </LinearLayout>
 
     <RelativeLayout
@@ -91,7 +92,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@id/search_bar"
-        app:layout_constraintStart_toStartOf="@id/search_bar"/>
+        app:layout_constraintStart_toStartOf="@id/search_bar">
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,5 +1,6 @@
 package com.darthvader11.bandlink.ui.messages
 
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
 import android.graphics.drawable.ClipDrawable.HORIZONTAL
@@ -13,9 +14,12 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
+import android.widget.EditText
 import android.widget.PopupMenu
+import android.widget.TextClock
 import android.widget.TextView
 import androidx.constraintlayout.solver.widgets.Rectangle
+import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
@@ -23,6 +27,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.darthvader11.bandlink.R
+import com.darthvader11.bandlink.ui.ChatActivity
 import com.example.messagebox.Model.DummyDataProvider
 import com.example.messagebox.Model.MessagePreview
 import com.example.messagebox.View.MessageBoxRecyclerAdapter
@@ -31,8 +36,8 @@ import kotlinx.android.synthetic.main.activity_messega_box.*
 import kotlinx.android.synthetic.main.activity_messega_box.recycler_view
 import kotlinx.android.synthetic.main.fragment_messages.*
 import kotlinx.android.synthetic.main.fragment_messages.view.*
+import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.message_box_list_item.*
-import kotlinx.android.synthetic.main.search_bar_result_text_view.*
 
 class MessagesFragment : Fragment() {
 
@@ -53,7 +58,7 @@ class MessagesFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         initRecyclerView()
-        initButton()
+        initFabButton()
         setSearchBar()
         messagePreviewAdapter.submitList(DummyDataProvider.dummyMessagePreview())
     }
@@ -70,11 +75,13 @@ class MessagesFragment : Fragment() {
 
     }
 
-    private fun initButton() {
+    private fun initFabButton() {
 
         val floatingActionButton = fabMessages
         floatingActionButton.setOnClickListener {
-            println("FAB Button Pressed")
+            val intent = Intent(activity, ChatActivity::class.java)
+            startActivity(intent)
+
         }
     }
 
@@ -91,8 +98,13 @@ class MessagesFragment : Fragment() {
                     p0?.let {
                         if (element.senderName.length >= p0.length && p0.isNotEmpty() ){
                             if (element.senderName.contains(p0.subSequence(0,p0.length), ignoreCase = true)) {
-                                val textView = search_bar_result_view
-                                textView.text = sender_name.text
+
+                                val textView = TextView(activity)
+                                textView.textSize = 20.toFloat()
+                                textView.setBackgroundResource(R.drawable.text_view_border)
+                                textView.setPadding(20,30,20,30)
+
+                                textView.text = element.senderName
 
 //                                textView.setOnClickListener {
 //                                    messagePreviewAdapter.items.forEachIndexed { index, messagePreview ->
@@ -114,7 +126,9 @@ class MessagesFragment : Fragment() {
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
             }
         })
     }
 }
+
