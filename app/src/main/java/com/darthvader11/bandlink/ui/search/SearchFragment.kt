@@ -67,9 +67,6 @@ class SearchFragment : Fragment(), View.OnClickListener {
                 transaction?.addToBackStack(null)
                 transaction?.commit()
 
-            }
-
-
         }
 
     }
