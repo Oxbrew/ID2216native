@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 
-class MainActivity : AppCompatActivity(), View.OnClickListener {
+class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,24 +25,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
         this.window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
         this.window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
 
-        val logout: Button = findViewById(R.id.logoutBtn)
-        logout.setOnClickListener(this)
 
 
     }
 
-    override fun onClick(v: View?) {
-        when(v?.id){
-            R.id.logoutBtn -> {
-
-
-                
-            }
-
-
-
-
-        }
-    }
 
 }
