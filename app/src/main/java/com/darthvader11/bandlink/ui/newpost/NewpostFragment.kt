@@ -30,23 +30,13 @@ class NewpostFragment : Fragment(), View.OnClickListener {
     }
 
     override fun onClick(v: View?) {
-        when(v?.id){
+        when(v?.id) {
             R.id.uploadImage -> {
                 val gallery = Intent()
                 gallery.setType("image/*")
                 gallery.setAction(Intent.ACTION_GET_CONTENT)
                 startActivityForResult(Intent.createChooser(gallery, "Select picture"), 1)
-
-
-
-
             }
-
-
         }
-
-
     }
-
-
 }

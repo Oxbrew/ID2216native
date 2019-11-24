@@ -1,9 +1,5 @@
 package com.darthvader11.bandlink.models
 
-import android.content.res.Resources
-import android.graphics.drawable.Drawable
-import androidx.core.content.ContextCompat
-import androidx.drawerlayout.widget.DrawerLayout
 import com.darthvader11.bandlink.R
 
 

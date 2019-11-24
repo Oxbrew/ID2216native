@@ -12,30 +12,30 @@ import android.text.TextWatcher
 import android.view.View
 import android.view.Window
 import android.view.inputmethod.EditorInfo
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ProgressBar
-import android.widget.Toast
+import android.widget.*
 
 
 import com.darthvader11.bandlink.R
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var loginViewModel: LoginViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.requestWindowFeature(Window.FEATURE_NO_TITLE)
+
         setContentView(R.layout.activity_login)
 
-        val intent = Intent(this , com.darthvader11.bandlink.MainActivity::class.java)
-        startActivity(intent)
 
-        /*val username = findViewById<EditText>(R.id.username)
+
+        val username = findViewById<EditText>(R.id.username)
         val password = findViewById<EditText>(R.id.password)
         val login = findViewById<Button>(R.id.login)
         val loading = findViewById<ProgressBar>(R.id.loading)
+
+        val register : TextView = findViewById(R.id.register_Signup)
+        register.setOnClickListener(this)
 
 
 
@@ -102,12 +102,10 @@ class LoginActivity : AppCompatActivity() {
             login.setOnClickListener {
                 val intent = Intent(context , com.darthvader11.bandlink.MainActivity::class.java)
                 startActivity(intent)
-                //loading.visibility = View.VISIBLE
-                //loginViewModel.login(username.text.toString(), password.text.toString())
+                loading.visibility = View.VISIBLE
+                loginViewModel.login(username.text.toString(), password.text.toString())
             }
         }
-      */
-
 
 
     }
@@ -127,6 +125,18 @@ class LoginActivity : AppCompatActivity() {
         Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
     }
 
+    override fun onClick(v: View?) {
+        when(v?.id){
+            R.id.register_Signup -> {
+                val intent = Intent(this, com.darthvader11.bandlink.ui.login.RegisterActivity::class.java)
+                startActivity(intent)
+
+            }
+
+
+
+        }
+    }
 
 
 }
@@ -144,4 +154,6 @@ fun EditText.afterTextChanged(afterTextChanged: (String) -> Unit) {
 
         override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
     })
+
+
 }

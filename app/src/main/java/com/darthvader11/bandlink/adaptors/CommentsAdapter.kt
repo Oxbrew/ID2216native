@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.darthvader11.bandlink.R
 import com.darthvader11.bandlink.models.Comment
 import com.darthvader11.bandlink.showToast
-import kotlinx.android.synthetic.main.comment_item.view.*
+import kotlinx.android.synthetic.main.item_comment.view.*
 
 
 class CommentsAdapter(val context: Context, private val comments: List<Comment>) :
@@ -25,7 +25,7 @@ class CommentsAdapter(val context: Context, private val comments: List<Comment>)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val view = LayoutInflater.from(context).inflate(R.layout.comment_item, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.item_comment, parent, false)
         return MyViewHolder(view)
     }
 
