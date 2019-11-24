@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_shareapp_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+      
+        <activity android:name=".ui.ChatActivity"></activity>
 
         <activity
             android:name=".ui.login.LoginActivity"
@@ -22,10 +23,7 @@
 
         </activity>
 
-
-        <activity android:name=".MainActivity" android:screenOrientation="portrait">
-
-        </activity>
+        <activity android:name=".MainActivity" android:screenOrientation="portrait"></activity>
 
         <activity android:name=".ui.login.RegisterActivity" android:screenOrientation="portrait"/>
     </application>
