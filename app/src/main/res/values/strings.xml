@@ -12,6 +12,9 @@
     <string name="title_activity_apply">Apply</string>
     <string name="register">Don\'t have an account?</string>
     <string name="signup">Register</string>
+    <string name="register_usernameTooShort">Username too short</string>
+    <string name="register_mailError">Not a valid email</string>
+    <string name="invalid_verification">Password must match!</string>
     <!-- Strings related to Apply -->
     <string name="experience_beginner">Beginner</string>
     <string name="experience_advanced">Advanced</string>

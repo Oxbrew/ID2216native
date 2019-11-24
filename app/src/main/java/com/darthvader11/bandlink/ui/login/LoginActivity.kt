@@ -3,7 +3,6 @@ package com.darthvader11.bandlink.ui.login
 import android.app.Activity
 import android.content.Intent
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
@@ -13,9 +12,11 @@ import android.view.View
 import android.view.Window
 import android.view.inputmethod.EditorInfo
 import android.widget.*
+import androidx.lifecycle.ViewModelProviders
 
 
 import com.darthvader11.bandlink.R
+import com.darthvader11.bandlink.ui.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
@@ -36,7 +37,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         val register : TextView = findViewById(R.id.register_Signup)
         register.setOnClickListener(this)
-
 
 
 
@@ -128,7 +128,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.register_Signup -> {
-                val intent = Intent(this, com.darthvader11.bandlink.ui.login.RegisterActivity::class.java)
+                val intent = Intent(this, RegisterActivity::class.java)
                 startActivity(intent)
 
             }
