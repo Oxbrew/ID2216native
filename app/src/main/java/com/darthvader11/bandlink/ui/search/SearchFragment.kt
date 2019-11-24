@@ -1,64 +1,75 @@
 package com.darthvader11.bandlink.ui.search
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.ImageButton
+import android.widget.ImageView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.darthvader11.bandlink.R
-import com.darthvader11.bandlink.ui.comment.CommentsFragment
+import com.darthvader11.bandlink.adaptors.SearchAdapter
+import com.darthvader11.bandlink.models.Supplier2
+import com.darthvader11.bandlink.ui.post.PostFragment
+import kotlinx.android.synthetic.main.fragment_search.*
 
 class SearchFragment : Fragment(), View.OnClickListener {
 
-
+    lateinit var adapter: SearchAdapter
+    lateinit var recyclerSearch: RecyclerView
     override fun onCreateView(
+
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         val root = inflater.inflate(R.layout.fragment_search, container, false)
+        recyclerSearch = root.findViewById(R.id.recyclerSearch)
 
-        val btnComment : Button =  root.findViewById(R.id.btnComment)
-        btnComment.setOnClickListener(this)
-        val btnShare : Button = root.findViewById(R.id.btnShare)
-        btnShare.setOnClickListener(this)
+        val sendSearch : ImageButton = root.findViewById(R.id.sendSearch)
+        sendSearch.setOnClickListener(this)
+        val logoSearch : ImageView = root.findViewById(R.id.logoSearch)
+        logoSearch.setOnClickListener(this)
 
 
         return root
+
+    }
+
+    private fun setupRecyclerView(recyclerSearch: RecyclerView){
+
+
+        val layoutManager = LinearLayoutManager(context)
+        layoutManager.orientation = LinearLayoutManager.VERTICAL
+        recyclerSearch.layoutManager = layoutManager
+        adapter = SearchAdapter(context!!, Supplier2.searchResults)
+        recyclerSearch.adapter = adapter
+
+
+
     }
 
     override fun onClick(v: View?) {
-        when (v?.id){
-            R.id.btnComment -> {
-                Toast.makeText(context, "DIZ WORKS", Toast.LENGTH_SHORT).show()
+        when(v?.id){
+            R.id.sendSearch -> {
+                setupRecyclerView(recyclerSearch)
+                inputSearch.setText("")
+                inputSearch.clearComposingText()
+            }
+            R.id.logoSearch -> {
                 val manager: FragmentManager? = fragmentManager
                 val transaction: FragmentTransaction? = manager?.beginTransaction()
-                transaction?.replace(R.id.nav_host_fragment, CommentsFragment() , CommentsFragment::class.java.simpleName  )
+                transaction?.replace(R.id.nav_host_fragment, PostFragment() , PostFragment::class.java.simpleName  )
                 transaction?.addToBackStack(null)
                 transaction?.commit()
-            }
-            R.id.btnShare -> {
-                val intent = Intent()
-                val message: String = "calincapitanu.com/Post.html"
-                intent.action = Intent.ACTION_SEND
-                intent.putExtra(Intent.EXTRA_TEXT, message)
-                intent.type = "text/plain"
-
-                startActivity(Intent.createChooser(intent, "Share to: "))
-            }
-
-
 
         }
 
     }
+
+
 }
