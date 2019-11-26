@@ -12,7 +12,9 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.darthvader11.bandlink.MainActivity
 import com.darthvader11.bandlink.R
+import com.darthvader11.bandlink.UserLocalStore
 import com.darthvader11.bandlink.adaptors.CommentsAdapter
 import com.darthvader11.bandlink.adaptors.FeedAdapter
 import com.darthvader11.bandlink.models.Supplier
@@ -32,8 +34,10 @@ class FeedFragment : Fragment(), View.OnClickListener {
         val createPost: AppCompatImageButton = root.findViewById(R.id.createPost)
         createPost.setOnClickListener(this)
 
+
         val recyclerFeed: RecyclerView = root.findViewById(R.id.recyclerFeed)
         setupRecyclerView(recyclerFeed)
+
 
         return root
     }
@@ -63,6 +67,7 @@ class FeedFragment : Fragment(), View.OnClickListener {
                 transaction?.addToBackStack(null)
                 transaction?.commit()
             }
+
         }
 
 

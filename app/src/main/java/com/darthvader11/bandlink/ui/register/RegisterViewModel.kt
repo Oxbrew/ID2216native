@@ -37,7 +37,7 @@ class RegisterViewModel : ViewModel() {
         return if(mail.contains('@')){
             Patterns.EMAIL_ADDRESS.matcher(mail).matches()
         } else {
-            mail.isNotBlank()
+            false
         }
     }
     private fun isPasswordValid(password: String): Boolean {

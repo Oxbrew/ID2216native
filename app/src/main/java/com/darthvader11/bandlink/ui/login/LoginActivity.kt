@@ -1,6 +1,7 @@
 package com.darthvader11.bandlink.ui.login
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.lifecycle.Observer
 import android.os.Bundle
@@ -16,11 +17,16 @@ import androidx.lifecycle.ViewModelProviders
 
 
 import com.darthvader11.bandlink.R
+import com.darthvader11.bandlink.User
+import com.darthvader11.bandlink.UserLocalStore
+import com.darthvader11.bandlink.server.GetUserCallback
+import com.darthvader11.bandlink.server.ServerRequest
 import com.darthvader11.bandlink.ui.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var loginViewModel: LoginViewModel
+    lateinit var userLocalStore: UserLocalStore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,8 +35,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         setContentView(R.layout.activity_login)
 
 
-
-        val username = findViewById<EditText>(R.id.username)
+        val email = findViewById<EditText>(R.id.email)
         val password = findViewById<EditText>(R.id.password)
         val login = findViewById<Button>(R.id.login)
         val loading = findViewById<ProgressBar>(R.id.loading)
@@ -38,6 +43,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         val register : TextView = findViewById(R.id.register_Signup)
         register.setOnClickListener(this)
 
+        userLocalStore = UserLocalStore(this)
 
 
         loginViewModel = ViewModelProviders.of(this, LoginViewModelFactory())
@@ -50,7 +56,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             login.isEnabled = loginState.isDataValid
 
             if (loginState.usernameError != null) {
-                username.error = getString(loginState.usernameError)
+                email.error = getString(loginState.usernameError)
             }
             if (loginState.passwordError != null) {
                 password.error = getString(loginState.passwordError)
@@ -73,9 +79,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             finish()
         })
 
-        username.afterTextChanged {
+        email.afterTextChanged {
             loginViewModel.loginDataChanged(
-                username.text.toString(),
+                email.text.toString(),
                 password.text.toString()
             )
         }
@@ -83,7 +89,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         password.apply {
             afterTextChanged {
                 loginViewModel.loginDataChanged(
-                    username.text.toString(),
+                    email.text.toString(),
                     password.text.toString()
                 )
             }
@@ -92,7 +98,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 when (actionId) {
                     EditorInfo.IME_ACTION_DONE ->
                         loginViewModel.login(
-                            username.text.toString(),
+                            email.text.toString(),
                             password.text.toString()
                         )
                 }
@@ -100,13 +106,59 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             login.setOnClickListener {
-                val intent = Intent(context , com.darthvader11.bandlink.MainActivity::class.java)
-                startActivity(intent)
+
+                var emailtxt = email.text.toString()
+                var passwordtxt = password.text.toString()
+
+                var user: User = User(emailtxt,passwordtxt)
+
+                authenticate(user)
+                
+
+
                 loading.visibility = View.VISIBLE
-                loginViewModel.login(username.text.toString(), password.text.toString())
+                loginViewModel.login(email.text.toString(), password.text.toString())
             }
         }
 
+
+    }
+
+    private fun authenticate(user: User){
+
+        var serverRequest: ServerRequest = ServerRequest(this)
+        serverRequest.fetchUserDataInBackground(user, object : GetUserCallback {
+            override fun done(returnedUser: User?) {
+                if(returnedUser == null){
+                    showErrorMessage()
+                }
+                else{
+                    logUserIn(returnedUser)
+                }
+
+
+            }
+        })
+
+    }
+
+    private fun logUserIn(user: User){
+
+        userLocalStore.storeUserData(user)
+        userLocalStore.setUserLoggedIn(true)
+        val intent = Intent(this , com.darthvader11.bandlink.MainActivity::class.java)
+        startActivity(intent)
+
+
+
+    }
+
+    private fun showErrorMessage(){
+
+        var dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+        dialogBuilder.setMessage("Incorrect user detail")
+        dialogBuilder.setPositiveButton("Ok", null)
+        dialogBuilder.show()
 
     }
 

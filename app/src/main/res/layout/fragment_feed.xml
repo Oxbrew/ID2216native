@@ -25,11 +25,28 @@
         android:layout_gravity="left"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="25dp"
         android:background="#00FFFFFF"
         android:scaleType="fitXY"
         app:srcCompat="@drawable/plus" />
+
+    <Button
+        android:id="@+id/btnLogout"
+        android:layout_width="55dp"
+        android:layout_height="25dp"
+        android:layout_weight="1"
+        android:text="Logout"
+        android:layout_gravity="left"
+        android:textSize="10sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="25dp"
+        android:layout_marginStart="5dp"
+        android:background="@color/backgroundAddComment"
+        android:scaleType="fitXY"
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
