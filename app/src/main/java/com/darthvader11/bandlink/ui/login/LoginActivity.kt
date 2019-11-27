@@ -1,25 +1,33 @@
 package com.darthvader11.bandlink.ui.login
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.inputmethod.EditorInfo
 import android.widget.*
+import androidx.lifecycle.ViewModelProviders
 
 
 import com.darthvader11.bandlink.R
+import com.darthvader11.bandlink.User
+import com.darthvader11.bandlink.UserLocalStore
+import com.darthvader11.bandlink.server.GetUserCallback
+import com.darthvader11.bandlink.server.ServerRequest
+import com.darthvader11.bandlink.ui.register.RegisterActivity
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var loginViewModel: LoginViewModel
+    lateinit var userLocalStore: UserLocalStore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,9 +35,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         setContentView(R.layout.activity_login)
 
+        Log.d("myTag", "Test")
 
-
-        val username = findViewById<EditText>(R.id.username)
+        val email = findViewById<EditText>(R.id.email)
         val password = findViewById<EditText>(R.id.password)
         val login = findViewById<Button>(R.id.login)
         val loading = findViewById<ProgressBar>(R.id.loading)
@@ -37,7 +45,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         val register : TextView = findViewById(R.id.register_Signup)
         register.setOnClickListener(this)
 
-
+        userLocalStore = UserLocalStore(this)
 
 
         loginViewModel = ViewModelProviders.of(this, LoginViewModelFactory())
@@ -50,32 +58,18 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             login.isEnabled = loginState.isDataValid
 
             if (loginState.usernameError != null) {
-                username.error = getString(loginState.usernameError)
+                email.error = getString(loginState.usernameError)
             }
             if (loginState.passwordError != null) {
                 password.error = getString(loginState.passwordError)
             }
         })
 
-        loginViewModel.loginResult.observe(this@LoginActivity, Observer {
-            val loginResult = it ?: return@Observer
 
-            loading.visibility = View.GONE
-            if (loginResult.error != null) {
-                showLoginFailed(loginResult.error)
-            }
-            if (loginResult.success != null) {
-                updateUiWithUser(loginResult.success)
-            }
-            setResult(Activity.RESULT_OK)
 
-            //Complete and destroy login activity once successful
-            finish()
-        })
-
-        username.afterTextChanged {
+        email.afterTextChanged {
             loginViewModel.loginDataChanged(
-                username.text.toString(),
+                email.text.toString(),
                 password.text.toString()
             )
         }
@@ -83,7 +77,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         password.apply {
             afterTextChanged {
                 loginViewModel.loginDataChanged(
-                    username.text.toString(),
+                    email.text.toString(),
                     password.text.toString()
                 )
             }
@@ -92,7 +86,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 when (actionId) {
                     EditorInfo.IME_ACTION_DONE ->
                         loginViewModel.login(
-                            username.text.toString(),
+                            email.text.toString(),
                             password.text.toString()
                         )
                 }
@@ -100,20 +94,65 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             }
 
             login.setOnClickListener {
-                val intent = Intent(context , com.darthvader11.bandlink.MainActivity::class.java)
-                startActivity(intent)
+
+                var emailtxt = email.text.toString()
+                var passwordtxt = password.text.toString()
+
+                var user: User = User(emailtxt,passwordtxt)
                 loading.visibility = View.VISIBLE
-                loginViewModel.login(username.text.toString(), password.text.toString())
+                authenticate(user)
+                loading.visibility = View.INVISIBLE
+
+
+                loginViewModel.login(email.text.toString(), password.text.toString())
             }
         }
 
 
     }
 
+    private fun authenticate(user: User){
+
+        var serverRequest: ServerRequest = ServerRequest(this)
+        serverRequest.fetchUserDataInBackground(user, object : GetUserCallback {
+            override fun done(returnedUser: User?) {
+                if(returnedUser?.username == "NOT_FOUND"){
+                    showErrorMessage()
+                }
+                else{
+                    logUserIn(returnedUser!!)
+                }
+
+
+            }
+        })
+
+    }
+
+    private fun logUserIn(user: User){
+
+        userLocalStore.storeUserData(user)
+        userLocalStore.setUserLoggedIn(true)
+
+        val intent = Intent(this , com.darthvader11.bandlink.MainActivity::class.java)
+        startActivity(intent)
+
+
+
+    }
+
+    private fun showErrorMessage(){
+
+        var dialogBuilder: AlertDialog.Builder = AlertDialog.Builder(this)
+        dialogBuilder.setMessage("Incorrect user detail")
+        dialogBuilder.setPositiveButton("Ok", null)
+        dialogBuilder.show()
+
+    }
+
     private fun updateUiWithUser(model: LoggedInUserView) {
         val welcome = getString(R.string.welcome)
         val displayName = model.displayName
-        // TODO : initiate successful logged in experience
         Toast.makeText(
             applicationContext,
             "$welcome $displayName",
@@ -128,7 +167,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.register_Signup -> {
-                val intent = Intent(this, com.darthvader11.bandlink.ui.login.RegisterActivity::class.java)
+                val intent = Intent(this, RegisterActivity::class.java)
                 startActivity(intent)
 
             }
