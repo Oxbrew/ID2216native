@@ -9,6 +9,7 @@ import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.Window
 import android.view.inputmethod.EditorInfo
@@ -34,6 +35,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         setContentView(R.layout.activity_login)
 
+        Log.d("myTag", "Test")
 
         val email = findViewById<EditText>(R.id.email)
         val password = findViewById<EditText>(R.id.password)
@@ -63,21 +65,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
             }
         })
 
-        loginViewModel.loginResult.observe(this@LoginActivity, Observer {
-            val loginResult = it ?: return@Observer
 
-            loading.visibility = View.GONE
-            if (loginResult.error != null) {
-                showLoginFailed(loginResult.error)
-            }
-            if (loginResult.success != null) {
-                updateUiWithUser(loginResult.success)
-            }
-            setResult(Activity.RESULT_OK)
-
-            //Complete and destroy login activity once successful
-            finish()
-        })
 
         email.afterTextChanged {
             loginViewModel.loginDataChanged(
@@ -111,12 +99,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
                 var passwordtxt = password.text.toString()
 
                 var user: User = User(emailtxt,passwordtxt)
-
-                authenticate(user)
-                
-
-
                 loading.visibility = View.VISIBLE
+                authenticate(user)
+                loading.visibility = View.INVISIBLE
+
+
                 loginViewModel.login(email.text.toString(), password.text.toString())
             }
         }
@@ -129,11 +116,11 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         var serverRequest: ServerRequest = ServerRequest(this)
         serverRequest.fetchUserDataInBackground(user, object : GetUserCallback {
             override fun done(returnedUser: User?) {
-                if(returnedUser == null){
+                if(returnedUser?.username == "NOT_FOUND"){
                     showErrorMessage()
                 }
                 else{
-                    logUserIn(returnedUser)
+                    logUserIn(returnedUser!!)
                 }
 
 
@@ -146,6 +133,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         userLocalStore.storeUserData(user)
         userLocalStore.setUserLoggedIn(true)
+
         val intent = Intent(this , com.darthvader11.bandlink.MainActivity::class.java)
         startActivity(intent)
 
@@ -165,7 +153,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
     private fun updateUiWithUser(model: LoggedInUserView) {
         val welcome = getString(R.string.welcome)
         val displayName = model.displayName
-        // TODO : initiate successful logged in experience
         Toast.makeText(
             applicationContext,
             "$welcome $displayName",

@@ -51,7 +51,9 @@ class MainActivity : AppCompatActivity(), View.OnClickListener {
 
     fun displayUserDetails() {
         var user: User = userLocalStore.getLoggedInUser()
-        Supplier.comments.add(Comment(user.email, user.username, R.drawable.profilezero))
+        Supplier.comments.add(Comment(user.username, user.username, R.drawable.profilezero))
+        Supplier.comments.add(Comment(user.username, user.email, R.drawable.profilezero))
+        Supplier.comments.add(Comment(user.username, user.password, R.drawable.profilezero))
 
     }
 

@@ -7,8 +7,11 @@ import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
+import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.darthvader11.bandlink.R
 import com.darthvader11.bandlink.User
+import com.darthvader11.bandlink.ui.register.RegisterActivity
 import org.apache.http.HttpEntity
 import org.json.JSONObject
 import java.io.*
@@ -23,7 +26,7 @@ class ServerRequest {
     val SERVER_ADDRESS: String = "http://calincapitanu.com/"
 
     constructor(context: Context){
-        var layout: RelativeLayout = View.inflate(context, R.layout.activity_login , null) as RelativeLayout
+        var layout: ConstraintLayout = View.inflate(context, R.layout.activity_login , null) as ConstraintLayout
         progressDialog = ProgressBar(context, null, android.R.attr.progressBarStyleLarge)
         var params: RelativeLayout.LayoutParams = RelativeLayout.LayoutParams(100, 100)
         params.addRule(RelativeLayout.CENTER_IN_PARENT)
@@ -35,11 +38,13 @@ class ServerRequest {
         progressDialog.visibility = View.VISIBLE
         StoreUserDataAsyncTask(user, callback).execute()
 
+
     }
 
     fun fetchUserDataInBackground(user: User, callback: GetUserCallback) {
         progressDialog.visibility = View.VISIBLE
         FetchUserDataAsyncTask(user, callback).execute()
+
 
     }
 
@@ -48,7 +53,7 @@ class ServerRequest {
         var user: User = user
         var userCallback: GetUserCallback = callback
 
-        override fun doInBackground(vararg params: Void?): Void {
+        override fun doInBackground(vararg params: Void?): Void? {
 
 
 
@@ -56,8 +61,9 @@ class ServerRequest {
             var httpConnection: HttpURLConnection = url.openConnection() as HttpURLConnection
             httpConnection.requestMethod = "POST"
             httpConnection.doOutput = true
-            httpConnection.doInput = true
             httpConnection.connectTimeout = CONNECTION_TIMEOUT
+
+            Log.d("ServerDebug", "got to StoreUserDataAsyncTask.doInBackground()")
 
 
             var builder: Uri.Builder = Uri.Builder()
@@ -74,21 +80,22 @@ class ServerRequest {
             bf.flush()
             bf.close()
 
+            Log.d("ServerDebug", httpConnection.responseCode.toString())
+
             var response = httpConnection.responseCode
             if(response != HttpURLConnection.HTTP_OK)
                 throw Exception("THE RESPONSE WAS NOT GOOD!!")
 
             httpConnection.disconnect()
 
-            return null!!
+            return null
         }
 
         override fun onPostExecute(result: Void?) {
 
             userCallback.done(null)
-
-
             progressDialog.visibility = View.INVISIBLE
+
             super.onPostExecute(result)
 
 
@@ -118,6 +125,8 @@ class ServerRequest {
             var url: URL = URL("http://calincapitanu.com/FetchUserData.php")
             var httpConnection: HttpURLConnection = url.openConnection() as HttpURLConnection
             httpConnection.requestMethod = "POST"
+            httpConnection.doOutput = true
+            httpConnection.doInput = true
             httpConnection.connectTimeout = CONNECTION_TIMEOUT
 
 
@@ -128,22 +137,21 @@ class ServerRequest {
             bf.close()
 
 
-            httpConnection.requestMethod = "GET"
-            httpConnection.connectTimeout = CONNECTION_TIMEOUT
+            Log.d("ServerDebug",httpConnection.responseCode.toString())
+            Log.d("ServerDebug",httpConnection.responseMessage.toString())
+
             var inputStream = httpConnection.inputStream
             var bufferedReader = BufferedReader(InputStreamReader(inputStream, "UTF-8"))
             var jObject: JSONObject = JSONObject(bufferedReader.readLine())
+
 
             if(jObject.length() != 0){
                 Log.v("happened", "2")
                 var username: String = jObject.getString("username")
 
-                returnedUser = User(user.email,user.password,username)
+                returnedUser = User(username,user.email,user.password)
             }
             else throw Exception("JOBJECT FAULT")
-
-
-
 
             return returnedUser
         }
@@ -151,9 +159,10 @@ class ServerRequest {
         override fun onPostExecute(returnedUser: User) {
 
             userCallback.done(returnedUser)
-
-
             progressDialog.visibility = View.INVISIBLE
+
+
+
             super.onPostExecute(returnedUser)
 
 
