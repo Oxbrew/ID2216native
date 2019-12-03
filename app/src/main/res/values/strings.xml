@@ -16,6 +16,7 @@
     <string name="register_usernameTooShort">Username too short</string>
     <string name="register_mailError">Not a valid email</string>
     <string name="invalid_verification">Password must match!</string>
+    <string name="mainactivity">MainActivity</string>
     <!-- Strings related to Apply -->
     <string name="experience_beginner">Beginner</string>
     <string name="experience_advanced">Advanced</string>
@@ -76,5 +77,10 @@ compose similar music to: Leprous, Haken, Muse, Foo Fighters.</string>
     <string name="title_messages">Messages</string>
     <string name="title_profile">Profile</string>
     <string name="profile_description">Lead Singer in IkrisBand</string>
+
+    <!-- Strings related to Messages -->
+    <string name="searchBoxDescription">Search Bands or Musicians</string>
+    <string name="action_settings">Settings</string>
+    <string name="message_box_action_bar">Message Box</string>
 
 </resources>
