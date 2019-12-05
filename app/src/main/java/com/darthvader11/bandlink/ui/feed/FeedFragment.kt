@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.Fragment
@@ -12,12 +11,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.darthvader11.bandlink.MainActivity
 import com.darthvader11.bandlink.R
-import com.darthvader11.bandlink.UserLocalStore
-import com.darthvader11.bandlink.adaptors.CommentsAdapter
 import com.darthvader11.bandlink.adaptors.FeedAdapter
-import com.darthvader11.bandlink.models.Supplier
 import com.darthvader11.bandlink.models.feedSupplier
 import com.darthvader11.bandlink.ui.newpost.NewpostFragment
 
@@ -49,7 +44,7 @@ class FeedFragment : Fragment(), View.OnClickListener {
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         recyclerFeed.layoutManager = layoutManager
-        adapter = FeedAdapter(context!!, feedSupplier.feedContent)
+        adapter = FeedAdapter(context!!, feedSupplier.feedContent, this)
         recyclerFeed.adapter = adapter
 
 
@@ -67,6 +62,7 @@ class FeedFragment : Fragment(), View.OnClickListener {
                 transaction?.addToBackStack(null)
                 transaction?.commit()
             }
+
 
         }
 

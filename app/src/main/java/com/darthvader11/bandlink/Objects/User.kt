@@ -1,4 +1,4 @@
-package com.darthvader11.bandlink
+package com.darthvader11.bandlink.Objects
 
 
 class User(var username: String, var email: String, var password: String) {

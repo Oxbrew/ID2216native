@@ -10,6 +10,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
+import com.darthvader11.bandlink.Objects.User
+import com.darthvader11.bandlink.Objects.UserLocalStore
 import com.darthvader11.bandlink.models.Comment
 import com.darthvader11.bandlink.models.Supplier
 import com.darthvader11.bandlink.ui.login.LoginActivity

@@ -1,4 +1,4 @@
-package com.darthvader11.bandlink
+package com.darthvader11.bandlink.Objects
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -25,7 +25,11 @@ class UserLocalStore {
         var username: String? = userLocalDatabase.getString("name", "")
         var password : String? = userLocalDatabase.getString("password", "")
         var mail : String? = userLocalDatabase.getString("email", "")
-        return User(username.toString(),mail.toString(),password.toString())
+        return User(
+            username.toString(),
+            mail.toString(),
+            password.toString()
+        )
     }
 
     fun setUserLoggedIn (loggedIn : Boolean) {

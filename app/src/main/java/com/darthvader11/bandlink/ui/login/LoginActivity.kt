@@ -1,11 +1,9 @@
 package com.darthvader11.bandlink.ui.login
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import androidx.lifecycle.Observer
 import android.os.Bundle
-import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import android.text.Editable
 import android.text.TextWatcher
@@ -18,8 +16,8 @@ import androidx.lifecycle.ViewModelProviders
 
 
 import com.darthvader11.bandlink.R
-import com.darthvader11.bandlink.User
-import com.darthvader11.bandlink.UserLocalStore
+import com.darthvader11.bandlink.Objects.User
+import com.darthvader11.bandlink.Objects.UserLocalStore
 import com.darthvader11.bandlink.server.GetUserCallback
 import com.darthvader11.bandlink.server.ServerRequest
 import com.darthvader11.bandlink.ui.register.RegisterActivity
@@ -97,8 +95,8 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
                 var emailtxt = email.text.toString()
                 var passwordtxt = password.text.toString()
-
-                var user: User = User(emailtxt,passwordtxt)
+                var user: User =
+                    User(emailtxt, passwordtxt)
                 loading.visibility = View.VISIBLE
                 authenticate(user)
                 loading.visibility = View.INVISIBLE
@@ -113,7 +111,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun authenticate(user: User){
 
-        var serverRequest: ServerRequest = ServerRequest(this)
+        var serverRequest: ServerRequest = ServerRequest(this, R.layout.activity_login)
         serverRequest.fetchUserDataInBackground(user, object : GetUserCallback {
             override fun done(returnedUser: User?) {
                 if(returnedUser?.username == "NOT_FOUND"){
@@ -148,20 +146,6 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         dialogBuilder.setPositiveButton("Ok", null)
         dialogBuilder.show()
 
-    }
-
-    private fun updateUiWithUser(model: LoggedInUserView) {
-        val welcome = getString(R.string.welcome)
-        val displayName = model.displayName
-        Toast.makeText(
-            applicationContext,
-            "$welcome $displayName",
-            Toast.LENGTH_LONG
-        ).show()
-    }
-
-    private fun showLoginFailed(@StringRes errorString: Int) {
-        Toast.makeText(applicationContext, errorString, Toast.LENGTH_SHORT).show()
     }
 
     override fun onClick(v: View?) {
