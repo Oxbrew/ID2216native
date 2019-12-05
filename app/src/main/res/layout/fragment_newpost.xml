@@ -1,137 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    >
-<LinearLayout
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
-
-    <ImageView
-        android:contentDescription="titleImg"
-        android:id="@+id/imageView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="75dp"
-        android:layout_marginTop="5dp"
-        app:srcCompat="@drawable/logo"/>
-
-
-    <androidx.cardview.widget.CardView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_marginHorizontal="10dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        app:cardCornerRadius="10dp"
-        android:backgroundTint="@color/backgroundAddComment">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <RelativeLayout
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:contentDescription="titleImg"
+            android:paddingHorizontal="75dp"
+            app:srcCompat="@drawable/logo" />
+
+
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <TextView
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginTop="30dp"
+            android:backgroundTint="@color/backgroundAddComment"
+            app:cardCornerRadius="10dp">
+
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="17sp"
-                android:layout_marginTop="10dp"
-                android:text="Post Title: "
-                android:textStyle="bold"
-                android:id="@+id/postTitle"
-                android:layout_marginStart="20dp" />
+                android:layout_height="match_parent">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputTitle"
-                android:layout_marginTop="5dp"
-                android:layout_marginHorizontal="15dp"
-                android:layout_width="match_parent"
-                android:textSize="15sp"
-                android:layout_below="@+id/postTitle"
-                android:hint="Write your post title here..."
-                android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/postTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Post Title: "
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
 
-            <com.google.android.material.button.MaterialButton
-                android:layout_centerHorizontal="true"
-                android:backgroundTint="@android:color/darker_gray"
-                android:layout_below="@+id/inputTitle"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="7dp"
-                android:text="Upload image"
-                android:id="@+id/uploadImage"
-                />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/postTitle"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="5dp"
+                    android:hint="Write your post title here..."
+                    android:textSize="15sp" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:textSize="17sp"
-                android:layout_below="@+id/uploadImage"
-                android:layout_height="wrap_content"
-                android:text="Description: "
-                android:textStyle="bold"
-                android:layout_marginTop="10dp"
-                android:id="@+id/textDescription"
-                android:layout_marginStart="20dp" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/uploadImageButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/inputTitle"
+                    android:layout_centerHorizontal="true"
+                    android:backgroundTint="@android:color/darker_gray"
+                    android:padding="7dp"
+                    android:text="Upload image"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Button" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_marginTop="5dp"
-                android:layout_below="@+id/textDescription"
-                android:layout_marginHorizontal="15dp"
-                android:layout_width="match_parent"
-                android:textSize="15sp"
-                android:hint="Try to describe what you are looking for here..."
-                android:id="@+id/inputDescription"
-                android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/textDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/uploadImageButton"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Description: "
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
 
-            <TextView
-                android:id="@+id/textLocation"
-                android:layout_width="wrap_content"
-                android:layout_height="30dp"
-                android:textAlignment="center"
-                android:layout_below="@+id/inputDescription"
-                android:layout_marginStart="20dp"
-                android:text="Location:"
-                android:layout_marginTop="10dp"
-                android:textSize="17sp"
-                android:textStyle="bold" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/textDescription"
+                    android:layout_marginHorizontal="15dp"
+                    android:layout_marginTop="5dp"
+                    android:hint="Try to describe what you are looking for here..."
+                    android:textSize="15sp" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="15sp"
-                android:layout_marginEnd="15dp"
-                android:layout_toRightOf="@+id/textLocation"
-                android:layout_below="@+id/inputDescription"
-                android:layout_marginStart="10dp"
-                android:hint="Input your locaton..."
-                android:id="@+id/inputLocation"
-                />
+                <TextView
+                    android:id="@+id/textLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/inputDescription"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Location:"
+                    android:textAlignment="center"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
 
-            <com.google.android.material.button.MaterialButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/inputLocation"
-                android:layout_centerHorizontal="true"
-                android:backgroundTint="@android:color/darker_gray"
-                android:layout_marginTop="10dp"
-                android:textAppearance="@style/TextAppearance.MaterialComponents.Button"
-                android:layout_marginBottom="20dp"
-                android:paddingHorizontal="30dp"
-                android:id="@+id/btnSubmit"
-                android:paddingVertical="5dp"
-                android:text="Submit"
-                />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputLocation"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/inputDescription"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_toRightOf="@+id/textLocation"
+                    android:hint="Input your locaton..."
+                    android:textSize="15sp" />
 
-
-        </RelativeLayout>
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSubmit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/inputLocation"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="20dp"
+                    android:backgroundTint="@android:color/darker_gray"
+                    android:paddingHorizontal="30dp"
+                    android:paddingVertical="5dp"
+                    android:text="Submit"
+                    android:textAppearance="@style/TextAppearance.MaterialComponents.Button" />
 
 
+            </RelativeLayout>
 
 
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
 
-</LinearLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="50dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/uploadImage"
+            />
+
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

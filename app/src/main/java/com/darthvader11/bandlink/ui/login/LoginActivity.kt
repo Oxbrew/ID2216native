@@ -95,8 +95,7 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
                 var emailtxt = email.text.toString()
                 var passwordtxt = password.text.toString()
-                var user: User =
-                    User(emailtxt, passwordtxt)
+                var user: User = User(emailtxt, passwordtxt)
                 loading.visibility = View.VISIBLE
                 authenticate(user)
                 loading.visibility = View.INVISIBLE

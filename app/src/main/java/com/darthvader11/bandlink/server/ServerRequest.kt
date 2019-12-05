@@ -1,9 +1,11 @@
 package com.darthvader11.bandlink.server
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.net.Uri
 import android.os.AsyncTask
 import android.text.Layout
+import android.util.Base64
 import android.util.Log
 import android.view.View
 import android.widget.ProgressBar
@@ -43,6 +45,12 @@ class ServerRequest() {
     fun submitPost(post: Post){
         progressDialog.visibility = View.VISIBLE
         SubmitPostAsyncTask(post).execute()
+    }
+
+    fun downloadImage(image: Bitmap, name: String){
+        progressDialog.visibility = View.VISIBLE
+        DownloadImageAsyncTask(image,name).execute()
+
     }
 
     inner class StoreUserDataAsyncTask(user: User, callback: GetUserCallback) : AsyncTask<Void, Void, Void>() {
@@ -180,6 +188,10 @@ class ServerRequest() {
         override fun doInBackground(vararg params: Void?): Void? {
 
 
+            var byteArrayOutputStream = ByteArrayOutputStream()
+            post.image.compress(Bitmap.CompressFormat.JPEG, 100 , byteArrayOutputStream)
+            var encodedImage: String = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT)
+
             var url = URL("http://calincapitanu.com/UploadPost.php")
             var httpConnection: HttpURLConnection = url.openConnection() as HttpURLConnection
             httpConnection.requestMethod = "POST"
@@ -194,6 +206,10 @@ class ServerRequest() {
             builder.appendQueryParameter("Author", post.author)
             builder.appendQueryParameter("Description", post.description)
             builder.appendQueryParameter("Location", post.location)
+            builder.appendQueryParameter("Picture", encodedImage)
+
+            Log.v("Server", encodedImage)
+            Log.v("Server", encodedImage.length.toString())
 
 
             var query: String = builder.build().encodedQuery as String
@@ -223,6 +239,67 @@ class ServerRequest() {
         }
     }
 
+    inner class DownloadImageAsyncTask(name: String) : AsyncTask<Void, Void, Bitmap>() {
+
+        var name: String = name
+
+
+        override fun doInBackground(vararg params: Void?): Bitmap? {
+
+
+
+            var url = URL("http://calincapitanu.com/pictures/" + name + ".JPG")
+            var httpConnection: HttpURLConnection = url.openConnection() as HttpURLConnection
+            httpConnection.requestMethod = "POST"
+            httpConnection.doOutput = true
+            httpConnection.connectTimeout = CONNECTION_TIMEOUT
+
+
+
+
+
+            var builder: Uri.Builder = Uri.Builder()
+            builder.appendQueryParameter("name", name)
+
+
+
+            var query: String = builder.build().encodedQuery as String
+
+            var os: OutputStream = httpConnection.outputStream
+            var bf = BufferedWriter(OutputStreamWriter(os, "UTF-8"))
+            bf.write(query)
+            bf.flush()
+            bf.close()
+
+
+            Log.v("ServerDebug", httpConnection.responseCode.toString())
+
+
+            var inputStream = httpConnection.inputStream
+            var bufferedReader = BufferedReader(InputStreamReader(inputStream, "UTF-8"))
+            var jObject: JSONObject = JSONObject(bufferedReader.readLine())
+
+            Log.v("Test", jObject.toString())
+
+
+
+
+            var response = httpConnection.responseCode
+            if (response != HttpURLConnection.HTTP_OK)
+                throw Exception("THE RESPONSE WAS NOT GOOD!!")
+
+            httpConnection.disconnect()
+
+            return null
+        }
+
+        override fun onPostExecute(result: Bitmap) {
+            progressDialog.visibility = View.INVISIBLE
+            super.onPostExecute(result)
+
+
+        }
+    }
 
 
 
