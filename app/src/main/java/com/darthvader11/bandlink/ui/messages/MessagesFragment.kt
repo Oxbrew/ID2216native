@@ -10,8 +10,10 @@ import android.graphics.drawable.ShapeDrawable
 import android.graphics.drawable.shapes.RoundRectShape
 import android.graphics.fonts.Font
 import android.graphics.fonts.FontStyle
+import android.opengl.Visibility
 import android.os.Bundle
 import android.text.Editable
+import android.text.Layout
 import android.text.TextWatcher
 import android.view.*
 import android.widget.EditText
@@ -28,6 +30,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.darthvader11.bandlink.R
 import com.darthvader11.bandlink.ui.ChatActivity
+import com.darthvader11.bandlink.ui.StartNewChatActivity
 import com.example.messagebox.Model.DummyDataProvider
 import com.example.messagebox.Model.MessagePreview
 import com.example.messagebox.View.MessageBoxRecyclerAdapter
@@ -79,40 +82,31 @@ class MessagesFragment : Fragment() {
 
         val floatingActionButton = fabMessages
         floatingActionButton.setOnClickListener {
-            val intent = Intent(activity, ChatActivity::class.java)
+            val intent = Intent(activity, StartNewChatActivity::class.java)
             startActivity(intent)
-
         }
     }
 
     private fun setSearchBar() {
 
-        val editText = editTextofMessageSearch
+        val editText = edit_text_of_message_search
+
         editText.addTextChangedListener(object : TextWatcher {
+
             override fun afterTextChanged(p0: Editable?) {
 
-                val invisibleSearchView = invisibleSearchView
-                invisibleSearchView.isVisible = true
+                var list = ArrayList<MessagePreview>()
 
                 messagePreviewAdapter.items.forEach { element ->
                     p0?.let {
-                        if (element.senderName.length >= p0.length && p0.isNotEmpty() ){
-                            if (element.senderName.contains(p0.subSequence(0,p0.length), ignoreCase = true)) {
-
-                                val textView = TextView(activity)
-                                textView.textSize = 20.toFloat()
-                                textView.setBackgroundResource(R.drawable.text_view_border)
-                                textView.setPadding(20,30,20,30)
-
-                                textView.text = element.senderName
-
-//                                textView.setOnClickListener {
-//                                    messagePreviewAdapter.items.forEachIndexed { index, messagePreview ->
-//                                       if (messagePreview.senderName == textView.text) {
-//                                       }
-//                                    }
-//                                }
-                                invisibleSearchView.addView(textView)
+                        if (element.senderName.length >= it.length && it.isNotEmpty() ){
+                            if (element.senderName.contains(it.subSequence(0,it.length), ignoreCase = true)) {
+                                list.add(element)
+                                messagePreviewAdapter.submitList(list)
+                                messagePreviewAdapter.notifyDataSetChanged()
+                            } else {
+                                messagePreviewAdapter.submitList(list)
+                                messagePreviewAdapter.notifyDataSetChanged()
                             }
                         }
                     }
@@ -120,9 +114,8 @@ class MessagesFragment : Fragment() {
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                val invisibleView = invisibleSearchView
-                invisibleView.removeAllViewsInLayout()
-                invisibleView.isVisible = false
+                messagePreviewAdapter.submitList(DummyDataProvider.dummyMessagePreview())
+                messagePreviewAdapter.notifyDataSetChanged()
             }
 
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
