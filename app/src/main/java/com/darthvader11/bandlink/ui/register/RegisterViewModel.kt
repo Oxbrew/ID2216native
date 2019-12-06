@@ -47,9 +47,4 @@ class RegisterViewModel : ViewModel() {
     private fun verifyPasswordValid(password: String, verifyPassword: String): Boolean {
         return password.equals(verifyPassword)
     }
-
-
-
-
-
 }

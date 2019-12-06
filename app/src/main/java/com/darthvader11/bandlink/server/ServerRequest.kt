@@ -69,8 +69,6 @@ class ServerRequest() {
 
         override fun doInBackground(vararg params: Void?): Void? {
 
-
-
             var url = URL("http://calincapitanu.com/Register.php")
             var httpConnection: HttpURLConnection = url.openConnection() as HttpURLConnection
             httpConnection.requestMethod = "POST"
@@ -133,7 +131,6 @@ class ServerRequest() {
             var query: String = builder.build().encodedQuery as String
 
             var returnedUser: User
-
 
 
             var url: URL = URL("http://calincapitanu.com/FetchUserData.php")

@@ -15,9 +15,13 @@ import com.darthvader11.bandlink.ui.comment.PostlistFragment
 import kotlinx.android.synthetic.main.fragment_profile.*
 import android.content.Intent
 import android.net.Uri
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.darthvader11.bandlink.adaptors.PostListAdapter
+import com.darthvader11.bandlink.models.Supplier3
 
 class ProfileFragment : Fragment(), View.OnClickListener {
-
+    lateinit var adapter: PostListAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -25,13 +29,14 @@ class ProfileFragment : Fragment(), View.OnClickListener {
     ): View? {
 
         val root = inflater.inflate(R.layout.fragment_profile, container, false)
+        val recyclerPosts: RecyclerView = root.findViewById(R.id.recyclerPosts)
+        setupRecyclerView(recyclerPosts)
 
         val submitButton: Button = root.findViewById(R.id.submitButton)
         submitButton.setOnClickListener(this)
         val backButton : ImageView = root.findViewById(R.id.backButton)
         backButton.setOnClickListener(this)
-        val btnPosts: Button = root.findViewById(R.id.btnPosts)
-        btnPosts.setOnClickListener(this)
+        
         val btnInstagram : ImageView = root.findViewById(R.id.btnInstagram)
         btnInstagram .setOnClickListener(this)
         val btnYoutube : ImageView = root.findViewById(R.id.btnYoutube)
@@ -39,6 +44,20 @@ class ProfileFragment : Fragment(), View.OnClickListener {
         val btnSpotify : ImageView = root.findViewById(R.id.btnSpotify)
         btnSpotify.setOnClickListener(this)
         return root
+    }
+
+    private fun setupRecyclerView(recyclerPosts: RecyclerView){
+
+
+        val layoutManager = LinearLayoutManager(context)
+        layoutManager.orientation = LinearLayoutManager.VERTICAL
+        recyclerPosts.layoutManager = layoutManager
+        adapter = PostListAdapter(context!!, Supplier3.posts)
+        recyclerPosts.adapter = adapter
+
+
+
+
     }
 
     override fun onClick(v: View?) {
@@ -73,14 +92,6 @@ class ProfileFragment : Fragment(), View.OnClickListener {
                 startActivity(webIntent)
             }
 
-            R.id.btnPosts -> {
-                Toast.makeText(context, "Posts", Toast.LENGTH_SHORT).show()
-                val manager: FragmentManager? = fragmentManager
-                val transaction: FragmentTransaction? = manager?.beginTransaction()
-                transaction?.replace(R.id.nav_host_fragment, PostlistFragment() , PostlistFragment::class.java.simpleName  )
-                transaction?.addToBackStack(null)
-                transaction?.commit()
-            }
         }
     }
 }
