@@ -57,8 +57,10 @@ class FeedAdapter (val context: Context, private val feedContent: List<Feed>, va
         fun setData(feed: Feed?, pos: Int){
             feed?.let {
                 itemView.feedTitle.text = feed.postTitle
-                itemView.feedInfo.text = feed.postInfo
-                itemView.feedPic.setImageResource(feed.postPic)
+                itemView.postAuthor.text = feed.author + " | "
+                itemView.postLikes.text = feed.likes.toString() + " likes | "
+                itemView.postGenre.text = feed.genre
+                itemView.feedPic.setImageBitmap(feed.postPic)
             }
             this.currentPost = feed
             this.currentPosition = pos

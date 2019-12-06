@@ -1,6 +1,7 @@
 package com.darthvader11.bandlink.ui.feed
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +14,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.darthvader11.bandlink.R
 import com.darthvader11.bandlink.adaptors.FeedAdapter
+import com.darthvader11.bandlink.models.Feed
 import com.darthvader11.bandlink.models.feedSupplier
+import com.darthvader11.bandlink.server.GetFeedCallback
+import com.darthvader11.bandlink.server.ServerRequest
 import com.darthvader11.bandlink.ui.newpost.NewpostFragment
 
 class FeedFragment : Fragment(), View.OnClickListener {
@@ -25,21 +29,34 @@ class FeedFragment : Fragment(), View.OnClickListener {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         val root = inflater.inflate(R.layout.fragment_feed, container, false)
         val createPost: AppCompatImageButton = root.findViewById(R.id.createPost)
         createPost.setOnClickListener(this)
 
-
         val recyclerFeed: RecyclerView = root.findViewById(R.id.recyclerFeed)
-        setupRecyclerView(recyclerFeed)
+
+
+
+        var serverRequest = ServerRequest(context!!,R.layout.fragment_feed)
+        serverRequest.updateAllFeed(object: GetFeedCallback{
+            override fun done(returnedCode: Int) {
+                if(returnedCode == feedSupplier.feedContent.size){
+                    setupRecyclerView(recyclerFeed)
+                    Log.v("afterFeed","PLS TELL ME IT GOT HERE")
+                }
+                //Log.v("afterFeed", feedSupplier.feedContent[0].toString())
+
+
+            }
+        })
 
 
         return root
     }
 
 
-    private fun setupRecyclerView(recyclerFeed: RecyclerView){
-
+    fun setupRecyclerView(recyclerFeed: RecyclerView){
 
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
@@ -62,7 +79,6 @@ class FeedFragment : Fragment(), View.OnClickListener {
                 transaction?.addToBackStack(null)
                 transaction?.commit()
             }
-
 
         }
 
