@@ -1,7 +1,9 @@
 package com.darthvader11.bandlink.ui.login
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.lifecycle.Observer
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -21,17 +23,32 @@ import com.darthvader11.bandlink.Objects.UserLocalStore
 import com.darthvader11.bandlink.server.GetUserCallback
 import com.darthvader11.bandlink.server.ServerRequest
 import com.darthvader11.bandlink.ui.register.RegisterActivity
+import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
     private lateinit var loginViewModel: LoginViewModel
     lateinit var userLocalStore: UserLocalStore
+    var myPreferences = "myPrefs"
+    lateinit var sharedPreferences: SharedPreferences
+    private var EMPTY = ""
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         this.requestWindowFeature(Window.FEATURE_NO_TITLE)
 
+        sharedPreferences = getSharedPreferences(myPreferences, Context.MODE_PRIVATE)
+        if(sharedPreferences.getString("email", EMPTY) != EMPTY){
+            val intent = Intent(this , com.darthvader11.bandlink.MainActivity::class.java)
+            startActivity(intent)
+        }
         setContentView(R.layout.activity_login)
+
+
+
+
+
 
         Log.d("myTag", "Test")
 
@@ -130,6 +147,13 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         userLocalStore.storeUserData(user)
         userLocalStore.setUserLoggedIn(true)
+
+        val editor = sharedPreferences.edit()
+
+        editor.putString("email", email.text.toString())
+        editor.putString("password", password.text.toString())
+        editor.apply()
+
 
         val intent = Intent(this , com.darthvader11.bandlink.MainActivity::class.java)
         startActivity(intent)
