@@ -276,11 +276,11 @@ class ServerRequest() {
         }
     }
 
-    inner class FetchAllPostsAsyncTask(feedCallback: GetFeedCallback) : AsyncTask<Void, Void, Int>() {
+    inner class FetchAllPostsAsyncTask(feedCallback: GetFeedCallback) : AsyncTask<Void, Void, JSONArray>() {
 
         var feedCallback: GetFeedCallback = feedCallback
 
-        override fun doInBackground(vararg params: Void?): Int {
+        override fun doInBackground(vararg params: Void?): JSONArray {
 
 
 
@@ -292,21 +292,18 @@ class ServerRequest() {
             httpConnection.connectTimeout = CONNECTION_TIMEOUT
 
 
-            Log.d("ServerDebug",httpConnection.responseCode.toString())
-            Log.d("ServerDebug",httpConnection.responseMessage.toString())
+            //Log.d("ServerDebug responseCode",httpConnection.responseCode.toString())
+            //Log.d("ServerDebug respondeMessage",httpConnection.responseMessage.toString())
 
             var inputStream = httpConnection.inputStream
             var bufferedReader = BufferedReader(InputStreamReader(inputStream, "UTF-8"))
             var jArray = JSONArray(bufferedReader.readLine())
 
-            Log.v("PLS", jArray.toString())
-            Log.v("PLS", jArray.length().toString())
+            Log.v("JSONArray", jArray.toString())
+            Log.v("JSONArray length", jArray.length().toString())
 
 
-
-
-            feedSupplier.feedContent.clear()
-
+/*
             for(i in 0 until jArray.length()){
                 Log.v("jobject",jArray[i].toString())
                 var jObject: JSONObject = jArray[i] as JSONObject
@@ -331,15 +328,15 @@ class ServerRequest() {
 
                 Log.v("download", jObject.getString("Title"))
             }
-            Log.v("JARRAY", jArray.length().toString())
-            return jArray.length()
+            Log.v("JARRAY", jArray.length().toString())*/
+            return jArray
         }
 
-        override fun onPostExecute(result: Int){
+        override fun onPostExecute(result: JSONArray){
             progressDialog.visibility = View.INVISIBLE
             feedCallback.done(result)
-            Log.v("shouldBeAfterFeed", feedSupplier.feedContent.size.toString())
-            Log.v("afterFeed", "This should actually be AFTER loading feed")
+            //Log.v("shouldBeAfterFeed", feedSupplier.feedContent.size.toString())
+            Log.v("JSONArray", "Array has been fetched")
             super.onPostExecute(result)
 
         }

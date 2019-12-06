@@ -14,6 +14,7 @@ import android.view.View
 import android.view.Window
 import android.view.inputmethod.EditorInfo
 import android.widget.*
+import androidx.core.app.ActivityCompat
 import androidx.lifecycle.ViewModelProviders
 
 
@@ -41,7 +42,9 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
         sharedPreferences = getSharedPreferences(myPreferences, Context.MODE_PRIVATE)
         if(sharedPreferences.getString("email", EMPTY) != EMPTY){
             val intent = Intent(this , com.darthvader11.bandlink.MainActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(intent)
+            ActivityCompat.finishAffinity(this)
         }
         setContentView(R.layout.activity_login)
 
