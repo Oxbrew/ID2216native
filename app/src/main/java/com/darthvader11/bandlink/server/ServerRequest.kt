@@ -2,18 +2,27 @@ package com.darthvader11.bandlink.server
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.AsyncTask
-import android.text.Layout
 import android.util.Base64
 import android.util.Log
 import android.view.View
+import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
+import androidx.arch.core.executor.TaskExecutor
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.graphics.drawable.toBitmap
+import androidx.core.graphics.drawable.toDrawable
 import com.darthvader11.bandlink.Objects.Post
-import com.darthvader11.bandlink.R
 import com.darthvader11.bandlink.Objects.User
+import com.darthvader11.bandlink.R
+import com.darthvader11.bandlink.models.Feed
+import com.darthvader11.bandlink.models.feedSupplier
+import com.darthvader11.bandlink.ui.feed.FeedFragment
+import kotlinx.android.synthetic.main.item_feed.view.*
+import org.json.JSONArray
 import org.json.JSONObject
 import java.io.*
 import java.lang.Exception
@@ -33,6 +42,7 @@ class ServerRequest() {
         layout.addView(progressDialog, params)
     }
 
+
     fun storeUserDataInBackground(user: User, callback: GetUserCallback) {
         progressDialog.visibility = View.VISIBLE
         StoreUserDataAsyncTask(user, callback).execute()
@@ -47,11 +57,17 @@ class ServerRequest() {
         SubmitPostAsyncTask(post).execute()
     }
 
-    fun downloadImage(image: Bitmap, name: String){
+    fun downloadImage(name: String, callback: GetPostCallback){
         progressDialog.visibility = View.VISIBLE
-        DownloadImageAsyncTask(image,name).execute()
-
+        DownloadImageAsyncTask(name, callback).execute()
     }
+
+    fun updateAllFeed(feedCallback: GetFeedCallback){
+        FetchAllPostsAsyncTask(feedCallback).execute()
+    }
+
+
+
 
     inner class StoreUserDataAsyncTask(user: User, callback: GetUserCallback) : AsyncTask<Void, Void, Void>() {
 
@@ -172,7 +188,6 @@ class ServerRequest() {
             progressDialog.visibility = View.INVISIBLE
 
 
-
             super.onPostExecute(returnedUser)
 
 
@@ -239,9 +254,10 @@ class ServerRequest() {
         }
     }
 
-    inner class DownloadImageAsyncTask(name: String) : AsyncTask<Void, Void, Bitmap>() {
+    inner class DownloadImageAsyncTask(name: String, callback: GetPostCallback) : AsyncTask<Void, Void, Bitmap>() {
 
         var name: String = name
+        var postCallback: GetPostCallback = callback
 
 
         override fun doInBackground(vararg params: Void?): Bitmap? {
@@ -250,56 +266,94 @@ class ServerRequest() {
 
             var url = URL("http://calincapitanu.com/pictures/" + name + ".JPG")
             var httpConnection: HttpURLConnection = url.openConnection() as HttpURLConnection
-            httpConnection.requestMethod = "POST"
-            httpConnection.doOutput = true
             httpConnection.connectTimeout = CONNECTION_TIMEOUT
-
-
-
-
-
-            var builder: Uri.Builder = Uri.Builder()
-            builder.appendQueryParameter("name", name)
-
-
-
-            var query: String = builder.build().encodedQuery as String
-
-            var os: OutputStream = httpConnection.outputStream
-            var bf = BufferedWriter(OutputStreamWriter(os, "UTF-8"))
-            bf.write(query)
-            bf.flush()
-            bf.close()
+            httpConnection.readTimeout = CONNECTION_TIMEOUT
 
 
             Log.v("ServerDebug", httpConnection.responseCode.toString())
 
+            return BitmapFactory.decodeStream(httpConnection.getContent() as InputStream, null, null)
+
+        }
+
+        override fun onPostExecute(result: Bitmap){
+            progressDialog.visibility = View.INVISIBLE
+            postCallback.done(result)
+            super.onPostExecute(result)
+        }
+    }
+
+    inner class FetchAllPostsAsyncTask(feedCallback: GetFeedCallback) : AsyncTask<Void, Void, Int>() {
+
+        var feedCallback: GetFeedCallback = feedCallback
+
+        override fun doInBackground(vararg params: Void?): Int {
+
+
+
+            var url: URL = URL("http://calincapitanu.com/FetchAllPosts.php")
+            var httpConnection: HttpURLConnection = url.openConnection() as HttpURLConnection
+            httpConnection.requestMethod = "POST"
+            httpConnection.doOutput = true
+            httpConnection.doInput = true
+            httpConnection.connectTimeout = CONNECTION_TIMEOUT
+
+
+            Log.d("ServerDebug",httpConnection.responseCode.toString())
+            Log.d("ServerDebug",httpConnection.responseMessage.toString())
 
             var inputStream = httpConnection.inputStream
             var bufferedReader = BufferedReader(InputStreamReader(inputStream, "UTF-8"))
-            var jObject: JSONObject = JSONObject(bufferedReader.readLine())
+            var jArray = JSONArray(bufferedReader.readLine())
 
-            Log.v("Test", jObject.toString())
+            Log.v("PLS", jArray.toString())
+            Log.v("PLS", jArray.length().toString())
 
 
 
 
-            var response = httpConnection.responseCode
-            if (response != HttpURLConnection.HTTP_OK)
-                throw Exception("THE RESPONSE WAS NOT GOOD!!")
+            feedSupplier.feedContent.clear()
 
-            httpConnection.disconnect()
+            for(i in 0 until jArray.length()){
+                Log.v("jobject",jArray[i].toString())
+                var jObject: JSONObject = jArray[i] as JSONObject
 
-            return null
+                downloadImage(jObject.getString("Title"), object: GetPostCallback{
+                    override fun done(returnedImage: Bitmap?) {
+                        if(returnedImage != null) {
+                            feedSupplier.feedContent.add(
+                                Feed(
+                                    jObject.getString("Title"),
+                                    "@" + jObject.getString("Author"),
+                                    jObject.getInt("LikesCount"),
+                                    jObject.getString("Genre"),
+                                    returnedImage
+                                )
+                            )
+                            Log.v("shouldBeAfterFeed", feedSupplier.feedContent.size.toString())
+                            Log.v("added", "one feed item has been added")
+                        }
+                    }
+                })
+
+                Log.v("download", jObject.getString("Title"))
+            }
+            Log.v("JARRAY", jArray.length().toString())
+            return jArray.length()
         }
 
-        override fun onPostExecute(result: Bitmap) {
+        override fun onPostExecute(result: Int){
             progressDialog.visibility = View.INVISIBLE
+            feedCallback.done(result)
+            Log.v("shouldBeAfterFeed", feedSupplier.feedContent.size.toString())
+            Log.v("afterFeed", "This should actually be AFTER loading feed")
             super.onPostExecute(result)
 
-
         }
+
     }
+
+
 
 
 

@@ -24,6 +24,8 @@ import com.darthvader11.bandlink.Objects.Post
 import com.darthvader11.bandlink.Objects.UserLocalStore
 import com.darthvader11.bandlink.R
 import com.darthvader11.bandlink.models.Feed
+import com.darthvader11.bandlink.models.feedSupplier
+import com.darthvader11.bandlink.server.GetPostCallback
 import com.darthvader11.bandlink.server.ServerRequest
 import com.darthvader11.bandlink.ui.feed.FeedFragment
 import com.google.android.material.textfield.TextInputEditText
@@ -37,6 +39,7 @@ class NewpostFragment : Fragment(), View.OnClickListener {
     lateinit var author: String
     private val RESULT_LOAD_IMAGE = 1
     lateinit var imageToUpload: ImageView
+
 
     override fun onCreateView(
 
@@ -74,7 +77,7 @@ class NewpostFragment : Fragment(), View.OnClickListener {
             R.id.uploadImageButton -> {
                 val galleryIntent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
                 startActivityForResult(galleryIntent, RESULT_LOAD_IMAGE)
-                //startActivityForResult(Intent.createChooser(gallery, "Select picture"), 1)
+
             }
             R.id.btnSubmit -> {
 
@@ -90,9 +93,11 @@ class NewpostFragment : Fragment(), View.OnClickListener {
 
                 var serverRequest = ServerRequest(context!!,R.layout.fragment_newpost)
                 serverRequest.submitPost(post)
-                //serverRequest.uploadImage(image, "TEST")
+
 
                 Toast.makeText(context,"Post has been uploaded!", Toast.LENGTH_SHORT).show()
+
+
                 val manager: FragmentManager? = fragmentManager
                 val transaction: FragmentTransaction? = manager?.beginTransaction()
                 transaction?.replace(R.id.nav_host_fragment, FeedFragment(), FeedFragment::class.java.simpleName)
