@@ -1,11 +1,15 @@
 package com.darthvader11.bandlink.ui.feed
 
+import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.RelativeLayout
 import android.widget.Toast
@@ -23,9 +27,11 @@ import com.darthvader11.bandlink.models.feedSupplier
 import com.darthvader11.bandlink.server.GetFeedCallback
 import com.darthvader11.bandlink.server.GetPostCallback
 import com.darthvader11.bandlink.server.ServerRequest
+import com.darthvader11.bandlink.ui.login.LoginActivity
 import com.darthvader11.bandlink.ui.newpost.NewpostFragment
 import org.json.JSONArray
 import org.json.JSONObject
+import java.sql.Types.NULL
 
 class FeedFragment : Fragment(), View.OnClickListener {
 
@@ -38,12 +44,17 @@ class FeedFragment : Fragment(), View.OnClickListener {
         savedInstanceState: Bundle?
     ): View? {
 
-
         val root = inflater.inflate(R.layout.fragment_feed, container, false) as ConstraintLayout
+
+
         val createPost: AppCompatImageButton = root.findViewById(R.id.createPost)
         createPost.setOnClickListener(this)
+        var logoutButton: Button = root.findViewById(R.id.btnLogout)
+        logoutButton.setOnClickListener(this)
+
 
         val recyclerFeed: RecyclerView = root.findViewById(R.id.recyclerFeed)
+
 
         val feedTop: RelativeLayout = root.findViewById(R.id.feedTop)
         progressDialog = ProgressBar(context, null, android.R. attr.progressBarStyleLarge)
@@ -52,8 +63,6 @@ class FeedFragment : Fragment(), View.OnClickListener {
         //params.addRule(RelativeLayout.ALIGN_BASELINE)
         feedTop.addView(progressDialog, params)
         progressDialog.visibility = View.VISIBLE
-
-
 
 
         var serverRequest = ServerRequest(context!!,R.layout.fragment_feed)
@@ -103,8 +112,6 @@ class FeedFragment : Fragment(), View.OnClickListener {
                 Log.v("afterFeed","PLS TELL ME IT GOT HERE")
 
                 //Log.v("afterFeed", feedSupplier.feedContent[0].toString())
-
-
             }
         })
 
@@ -122,10 +129,7 @@ class FeedFragment : Fragment(), View.OnClickListener {
         adapter = FeedAdapter(context!!, feedSupplier.feedContent, this)
         recyclerFeed.adapter = adapter
 
-
-
     }
-
 
     override fun onClick(v: View?) {
         when (v?.id) {
@@ -136,6 +140,15 @@ class FeedFragment : Fragment(), View.OnClickListener {
                 transaction?.replace(R.id.nav_host_fragment, NewpostFragment(), NewpostFragment::class.java.simpleName)
                 transaction?.addToBackStack(null)
                 transaction?.commit()
+            }
+            R.id.btnLogout -> {
+
+                var sharedPreferences = context?.getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
+                var editor = sharedPreferences?.edit()
+                editor?.putString("email", "")
+                editor?.apply()
+                var intent = Intent(context, LoginActivity::class.java)
+                startActivity(intent)
             }
 
         }

@@ -66,8 +66,6 @@ class NewpostFragment : Fragment(), View.OnClickListener {
          location= root.findViewById(R.id.inputLocation)
 
 
-
-
         return root
 
     }
@@ -91,7 +89,7 @@ class NewpostFragment : Fragment(), View.OnClickListener {
                 Log.v("newpost", "At least something?")
                 Log.v("image", "After button pressed")
 
-                var serverRequest = ServerRequest(context!!,R.layout.fragment_newpost)
+                var serverRequest = ServerRequest(context!!, R.layout.fragment_newpost)
                 serverRequest.submitPost(post)
 
 

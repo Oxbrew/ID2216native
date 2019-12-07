@@ -201,7 +201,7 @@ class ServerRequest() {
             var httpConnection: HttpURLConnection = url.openConnection() as HttpURLConnection
             httpConnection.requestMethod = "POST"
             httpConnection.doOutput = true
-            httpConnection.connectTimeout = CONNECTION_TIMEOUT
+            httpConnection.connectTimeout = CONNECTION_TIMEOUT * 10
 
             Log.d("ServerDebug", "got to SubmitPostDataAsyncTask.doInBackground()")
 
@@ -218,6 +218,8 @@ class ServerRequest() {
 
 
             var query: String = builder.build().encodedQuery as String
+
+            Log.v("Post", query)
 
             var os: OutputStream = httpConnection.outputStream
             var bf = BufferedWriter(OutputStreamWriter(os, "UTF-8"))
@@ -237,6 +239,7 @@ class ServerRequest() {
         }
 
         override fun onPostExecute(result: Void?) {
+            Log.v("Post", "Post has been submited")
             progressDialog.visibility = View.INVISIBLE
             super.onPostExecute(result)
 
