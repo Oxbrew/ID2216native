@@ -78,7 +78,7 @@ class FeedFragment : Fragment(), View.OnClickListener {
                 }
 
                 feedSupplier.feedContent.clear()
-
+                var nullPics: Int = 0
 
                 for(i in 0 until returnedCode.length()){
                     Log.v("JObject",returnedCode[i].toString())
@@ -104,7 +104,8 @@ class FeedFragment : Fragment(), View.OnClickListener {
                                 Log.v("shouldBeAfterFeed", feedSupplier.feedContent.size.toString())
                                 Log.v("added", "one feed item has been added")
                             }
-                            if(returnedCode.length() == feedSupplier.feedContent.size){
+                            else nullPics++;
+                            if(returnedCode.length() == feedSupplier.feedContent.size + nullPics){
                                 setupRecyclerView(recyclerFeed)
                                 progressDialog.visibility = View.INVISIBLE
                             }

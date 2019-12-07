@@ -26,7 +26,7 @@ import javax.security.auth.callback.Callback
 class ServerRequest() {
 
     lateinit var progressDialog: ProgressBar
-    val CONNECTION_TIMEOUT: Int = 1000 * 15
+    val CONNECTION_TIMEOUT: Int = 1000 * 80
 
     constructor(context: Context, layout: Int) : this(){
         var layout: ConstraintLayout = View.inflate(context,layout , null) as ConstraintLayout
@@ -274,6 +274,9 @@ class ServerRequest() {
 
 
 
+            if(name.equals("null")){
+                return null
+            }
             var url = URL("http://calincapitanu.com/pictures/" + name + ".JPG")
             var httpConnection: HttpURLConnection = url.openConnection() as HttpURLConnection
             httpConnection.connectTimeout = CONNECTION_TIMEOUT
@@ -286,7 +289,7 @@ class ServerRequest() {
 
         }
 
-        override fun onPostExecute(result: Bitmap){
+        override fun onPostExecute(result: Bitmap?){
             progressDialog.visibility = View.INVISIBLE
             postCallback.done(result)
             super.onPostExecute(result)
