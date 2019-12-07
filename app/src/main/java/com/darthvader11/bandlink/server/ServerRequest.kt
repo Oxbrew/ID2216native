@@ -21,6 +21,7 @@ import java.io.*
 import java.lang.Exception
 import java.net.HttpURLConnection
 import java.net.URL
+import javax.security.auth.callback.Callback
 
 class ServerRequest() {
 
@@ -58,6 +59,15 @@ class ServerRequest() {
     fun updateAllFeed(feedCallback: GetFeedCallback){
         FetchAllPostsAsyncTask(feedCallback).execute()
     }
+
+    fun updateLikes(likes: Int, post_id: Int){
+        UpdateLikesAsyncTask(likes,post_id).execute()
+    }
+
+    fun checkLikes(user: String, post_id: Int, callback: GetLikeCallback){
+        CheckLikesAsyncTask(user,post_id, callback).execute()
+    }
+
 
 
 
@@ -350,23 +360,24 @@ class ServerRequest() {
 
     }
 
-   /* inner class FetchPostDataAsyncTask(feed: Feed) : AsyncTask<Void, Void, Post>() {
+   inner class UpdateLikesAsyncTask(likes: Int, post_id: Int) : AsyncTask<Void, Void, Void?>() {
 
-        var feed: Feed = feed
+       var likes: Int = likes
+       var post_id: Int = post_id
 
 
-        override fun doInBackground(vararg params: Void?): Post {
+        override fun doInBackground(vararg params: Void?): Void? {
 
 
             var builder: Uri.Builder = Uri.Builder()
-            builder.appendQueryParameter("post_id", feed.post_id.toString())
+            builder.appendQueryParameter("post_id", post_id.toString())
+            builder.appendQueryParameter("likes", likes.toString())
 
             var query: String = builder.build().encodedQuery as String
 
-            var returnedPost: Post
 
 
-            var url: URL = URL("http://calincapitanu.com/FetchUserData.php")
+            var url: URL = URL("http://calincapitanu.com/UpdateLikes.php")
             var httpConnection: HttpURLConnection = url.openConnection() as HttpURLConnection
             httpConnection.requestMethod = "POST"
             httpConnection.doOutput = true
@@ -384,35 +395,72 @@ class ServerRequest() {
             Log.d("ServerDebug",httpConnection.responseCode.toString())
             Log.d("ServerDebug",httpConnection.responseMessage.toString())
 
+            return null
+        }
+
+        override fun onPostExecute(returned: Void?) {
+            super.onPostExecute(returned)
+            Log.v("updatelikes", "Likes Updated")
+        }
+    }
+
+
+
+    inner class CheckLikesAsyncTask(username: String, post_id: Int, callback: GetLikeCallback) : AsyncTask<Void, Void, Boolean>() {
+
+        var username: String = username
+        var post_id: Int = post_id
+        var likeCallback: GetLikeCallback = callback
+
+
+        override fun doInBackground(vararg params: Void?): Boolean {
+
+
+
+            var url: URL = URL("http://calincapitanu.com/CheckLikes.php")
+            var httpConnection: HttpURLConnection = url.openConnection() as HttpURLConnection
+            httpConnection.requestMethod = "POST"
+            httpConnection.doOutput = true
+            httpConnection.doInput = true
+            httpConnection.connectTimeout = 1000*15
+
+
+            var builder: Uri.Builder = Uri.Builder()
+            builder.appendQueryParameter("post_id", post_id.toString())
+            builder.appendQueryParameter("user", username)
+            var query: String = builder.build().encodedQuery as String
+
+            var os: OutputStream = httpConnection.outputStream
+            var bf = BufferedWriter(OutputStreamWriter(os, "UTF-8"))
+            bf.write(query)
+            bf.flush()
+            bf.close()
+
+
+
+            Log.d("ServerDebug",httpConnection.responseCode.toString())
+            Log.d("ServerDebug",httpConnection.responseMessage.toString())
+
+
             var inputStream = httpConnection.inputStream
             var bufferedReader = BufferedReader(InputStreamReader(inputStream, "UTF-8"))
-            var jObject: JSONObject = JSONObject(bufferedReader.readLine())
+            var jObject = JSONObject(bufferedReader.readLine())
+            Log.v("TEEEST", jObject.getString("post_id"))
+            Log.v("TEEEST", jObject.getString("user"))
 
-
-            if(jObject.length() != 0){
-                Log.v("happened", "2")
-                Log.v("TEST", jObject.toString())
-
-                returnedPost = Post(jObject.getString("Title"), jObject.getString(""))
-            }
-            else throw Exception("JOBJECT FAULT")
-
-            return returnedUser
+            if(jObject.getString("post_id").equals("NOT_FOUND") &&
+                jObject.getString("user").equals("NOT_FOUND"))
+                return true
+            return false
         }
 
-        override fun onPostExecute(returnedPost: Post) {
-
-            userCallback.done(returnedUser)
-            progressDialog.visibility = View.INVISIBLE
-
-
-            super.onPostExecute(returnedUser)
-
-
+        override fun onPostExecute(returned: Boolean) {
+            super.onPostExecute(returned)
+            likeCallback.done(returned)
+            Log.v("updatelikes", "Likes Updated")
         }
-
     }
-*/
+
 
 
 

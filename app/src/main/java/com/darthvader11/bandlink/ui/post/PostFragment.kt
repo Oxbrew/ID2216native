@@ -1,6 +1,7 @@
 package com.darthvader11.bandlink.ui.post
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,16 +15,29 @@ import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.darthvader11.bandlink.Objects.User
+import com.darthvader11.bandlink.Objects.UserLocalStore
 import com.darthvader11.bandlink.R
 import com.darthvader11.bandlink.models.Feed
 import com.darthvader11.bandlink.models.Supplier
 import com.darthvader11.bandlink.models.feedSupplier
+import com.darthvader11.bandlink.server.GetFeedCallback
+import com.darthvader11.bandlink.server.GetLikeCallback
+import com.darthvader11.bandlink.server.ServerRequest
 import com.darthvader11.bandlink.ui.comment.CommentsFragment
 import com.darthvader11.bandlink.ui.home.HomeFragment
 import com.darthvader11.bandlink.ui.newpost.NewpostFragment
+import org.json.JSONArray
+import org.json.JSONObject
+import java.io.*
+import java.net.HttpURLConnection
+import java.net.URL
 
 class PostFragment : Fragment(), View.OnClickListener {
 
+    lateinit var element: Feed
+    lateinit var postLikes: TextView
+    lateinit var user: User
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,13 +55,17 @@ class PostFragment : Fragment(), View.OnClickListener {
         btnApply.setOnClickListener(this)
         val backButton : ImageView = root.findViewById(R.id.backButton)
         backButton.setOnClickListener(this)
+        val likeButton: Button = root.findViewById(R.id.btnLike)
+        likeButton.setOnClickListener(this)
+
+
         val args = arguments
 
         if(args != null) {
             Supplier.comments[3].comment = args.getString("post_id").toString()
         }
 
-        var element: Feed = Feed(args?.getString("post_id")!!.toInt())
+        element = Feed(args?.getString("post_id")!!.toInt())
         var index: Int = feedSupplier.feedContent.binarySearch(element)
 
         element = feedSupplier.feedContent[index]
@@ -60,7 +78,7 @@ class PostFragment : Fragment(), View.OnClickListener {
         postPic.setImageBitmap(element.postPic)
         var postAuthor = root.findViewById<TextView>(R.id.profileText)
         postAuthor.text = element.author
-        var postLikes = root.findViewById<TextView>(R.id.likesCount)
+        postLikes = root.findViewById<TextView>(R.id.likesCount)
         postLikes.text = element.likesCount.toString()
         var postDescription = root.findViewById<TextView>(R.id.txtDescription)
         postDescription.text = element.description
@@ -70,6 +88,9 @@ class PostFragment : Fragment(), View.OnClickListener {
         postGenre.text = element.genre
 
         Supplier.comments[1].comment = "This has been changed hahaa" //Testing
+
+        var userlogin: UserLocalStore = UserLocalStore(context!!)
+        user = userlogin.getLoggedInUser()
 
 
         return root
@@ -107,11 +128,29 @@ class PostFragment : Fragment(), View.OnClickListener {
                 transaction?.replace(R.id.nav_host_fragment, NewpostFragment() , NewpostFragment::class.java.simpleName  )
                 transaction?.addToBackStack(null)
                 transaction?.commit()
+            }
+            R.id.btnLike -> {
+
+                var serverRequest1 = ServerRequest(context!!,R.layout.fragment_feed)
+                serverRequest1.checkLikes(user.username, element.post_id, object : GetLikeCallback{
+                    override fun done(returnedCode: Boolean) {
+                        if(returnedCode == true){
+                        element.likesCount++
+                        postLikes.text = element.likesCount.toString()
+                        var serverRequest = ServerRequest(context!!,R.layout.fragment_feed)
+                        serverRequest.updateLikes(element.likesCount, element.post_id)}
+                        else {
+                            Toast.makeText(context, "You have already liked this post", Toast.LENGTH_SHORT).show()
+                        }
+
+                    }
+
+
+                })
+
 
 
             }
-
-
 
         }
 

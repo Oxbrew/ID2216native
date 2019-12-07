@@ -1,11 +1,14 @@
 package com.darthvader11.bandlink.ui.search
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -13,8 +16,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.darthvader11.bandlink.R
 import com.darthvader11.bandlink.adaptors.SearchAdapter
+import com.darthvader11.bandlink.models.Feed
 import com.darthvader11.bandlink.models.Supplier2
+import com.darthvader11.bandlink.models.feedSupplier
 import com.darthvader11.bandlink.ui.post.PostFragment
+import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.fragment_search.*
 
 class SearchFragment : Fragment(), View.OnClickListener {
@@ -32,13 +38,16 @@ class SearchFragment : Fragment(), View.OnClickListener {
 
         val sendSearch: ImageButton = root.findViewById(R.id.sendSearch)
         sendSearch.setOnClickListener(this)
-        val logoSearch: ImageView = root.findViewById(R.id.logoSearch)
-        logoSearch.setOnClickListener(this)
+
+
+
 
 
         return root
 
     }
+
+
 
     private fun setupRecyclerView(recyclerSearch: RecyclerView) {
 
@@ -56,19 +65,38 @@ class SearchFragment : Fragment(), View.OnClickListener {
         when (v?.id) {
             R.id.sendSearch -> {
                 setupRecyclerView(recyclerSearch)
+                Supplier2.searchResults.clear()
+                val searchText = inputSearch.text.toString()
+                if(searchText.equals("")){
+                    Toast.makeText(context,"You need to type something in", Toast.LENGTH_SHORT).show()
+                    return
+                }
+                for(element: Feed in feedSupplier.feedContent){
+                    if(element.genre.contains(searchText)) {
+                        Supplier2.searchResults.add(element)
+                        continue
+                    }
+                    if(element.postTitle.contains(searchText)){
+                        Supplier2.searchResults.add(element)
+                        continue
+                    }
+                    if(element.tags.contains(searchText)){
+                        Supplier2.searchResults.add(element)
+                        continue
+                    }
+                    if(element.location.contains(searchText)){
+                        Supplier2.searchResults.add(element)
+                        continue
+                    }
+                }
+                if(Supplier2.searchResults.isEmpty()){
+                    Toast.makeText(context,"Unfortunatelly, there were no results", Toast.LENGTH_SHORT).show()
+                }
+                setupRecyclerView(recyclerSearch)
                 inputSearch.setText("")
+                val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(v.windowToken, 0)
                 inputSearch.clearComposingText()
-            }
-            R.id.logoSearch -> {
-                val manager: FragmentManager? = fragmentManager
-                val transaction: FragmentTransaction? = manager?.beginTransaction()
-                transaction?.replace(
-                    R.id.nav_host_fragment,
-                    PostFragment(),
-                    PostFragment::class.java.simpleName
-                )
-                transaction?.addToBackStack(null)
-                transaction?.commit()
 
             }
 

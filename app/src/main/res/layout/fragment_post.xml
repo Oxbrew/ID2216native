@@ -181,7 +181,7 @@
             android:layout_above="@+id/actionButtons"
             android:layout_alignLeft="@+id/txtInputGenre"
             android:layout_marginStart="-45dp"
-            android:layout_marginBottom="9dp"
+            android:layout_marginBottom="10dp"
             android:text="Genre:"
             android:textStyle="bold" />
 

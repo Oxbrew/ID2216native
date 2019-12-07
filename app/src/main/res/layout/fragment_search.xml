@@ -32,6 +32,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="300dp"
                 android:layout_weight="1.0"
+                android:hint="Search by Title, Genre, Location or Tags..."
                 android:id="@+id/inputSearch"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp" />

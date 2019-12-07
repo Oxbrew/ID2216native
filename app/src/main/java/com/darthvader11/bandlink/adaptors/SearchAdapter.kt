@@ -6,12 +6,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.darthvader11.bandlink.R
+import com.darthvader11.bandlink.models.Feed
 import com.darthvader11.bandlink.models.Search
 import com.darthvader11.bandlink.showToast
 import kotlinx.android.synthetic.main.item_search.view.*
 
 
-class SearchAdapter(val context: Context, private val searchs: List<Search>) :
+class SearchAdapter(val context: Context, private val searchs: List<Feed>) :
     RecyclerView.Adapter<SearchAdapter.MyViewHolder>() {
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -30,26 +31,26 @@ class SearchAdapter(val context: Context, private val searchs: List<Search>) :
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        var currentSearch: Search? = null
+        var currentSearch: Feed? = null
         var currentPosition: Int = 0
 
         init {
             itemView.setOnClickListener {
                 currentSearch?.let {
 
-                    context.showToast(currentSearch!!.title + " clicked!")
+                    context.showToast(currentSearch!!.postTitle + " clicked!")
                 }
 
             }
 
         }
 
-        fun setData(search: Search?, pos: Int) {
+        fun setData(search: Feed?, pos: Int) {
             search?.let {
-                itemView.titleSearch.text = search.title
+                itemView.titleSearch.text = search.postTitle
                 itemView.authorSearch.text = search.author
                 itemView.locationSearch.text = search.location
-                itemView.profilePic.setImageResource(search.drb)
+                itemView.profilePic.setImageBitmap(search.postPic)
             }
             this.currentSearch = search
             this.currentPosition = pos
