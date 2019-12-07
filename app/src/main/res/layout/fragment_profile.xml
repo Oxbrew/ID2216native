@@ -26,16 +26,15 @@
                 android:layout_marginTop="5dp"
                 app:srcCompat="@drawable/logo"/>
 
+
             <ImageView
                 android:id="@+id/backButton"
-                android:contentDescription="backButton"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:layout_marginStart="6dp"
-                android:layout_marginTop="84dp"
-                app:srcCompat="@drawable/back"/>
-
-
+                android:layout_marginStart="7dp"
+                android:layout_marginTop="70dp"
+                android:contentDescription="backButton"
+                app:srcCompat="@drawable/back" />
 
             <TextView
                 android:id="@+id/titleText"
