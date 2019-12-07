@@ -343,6 +343,69 @@ class ServerRequest() {
 
     }
 
+    inner class FetchPostDataAsyncTask(feed: Feed) : AsyncTask<Void, Void, Post>() {
+
+        var feed: Feed = feed
+
+
+        override fun doInBackground(vararg params: Void?): Post {
+
+
+            var builder: Uri.Builder = Uri.Builder()
+            builder.appendQueryParameter("post_id", feed.post_id.toString())
+
+            var query: String = builder.build().encodedQuery as String
+
+            var returnedPost: Post
+
+
+            var url: URL = URL("http://calincapitanu.com/FetchUserData.php")
+            var httpConnection: HttpURLConnection = url.openConnection() as HttpURLConnection
+            httpConnection.requestMethod = "POST"
+            httpConnection.doOutput = true
+            httpConnection.doInput = true
+            httpConnection.connectTimeout = CONNECTION_TIMEOUT
+
+
+            var os: OutputStream = httpConnection.outputStream
+            var bf = BufferedWriter(OutputStreamWriter(os, "UTF-8"))
+            bf.write(query)
+            bf.flush()
+            bf.close()
+
+
+            Log.d("ServerDebug",httpConnection.responseCode.toString())
+            Log.d("ServerDebug",httpConnection.responseMessage.toString())
+
+            var inputStream = httpConnection.inputStream
+            var bufferedReader = BufferedReader(InputStreamReader(inputStream, "UTF-8"))
+            var jObject: JSONObject = JSONObject(bufferedReader.readLine())
+
+
+            if(jObject.length() != 0){
+                Log.v("happened", "2")
+                Log.v("TEST", jObject.toString())
+
+                returnedPost = Post(jObject.getString("Title"), jObject.getString(""))
+            }
+            else throw Exception("JOBJECT FAULT")
+
+            return returnedUser
+        }
+
+        override fun onPostExecute(returnedPost: Post) {
+
+            userCallback.done(returnedUser)
+            progressDialog.visibility = View.INVISIBLE
+
+
+            super.onPostExecute(returnedUser)
+
+
+        }
+
+    }
+
 
 
 

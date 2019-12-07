@@ -11,6 +11,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.darthvader11.bandlink.R
 import com.darthvader11.bandlink.models.Feed
+import com.darthvader11.bandlink.models.Post
 import com.darthvader11.bandlink.ui.feed.FeedFragment
 import com.darthvader11.bandlink.ui.post.PostFragment
 import kotlinx.android.synthetic.main.item_feed.view.*
@@ -40,7 +41,8 @@ class FeedAdapter (val context: Context, private val feedContent: List<Feed>, va
                 currentPost?.let {
 
                     val args = Bundle()
-                    args.putString("post_id", "1")
+                    args.putString("post_id", feedContent[currentPosition].post_id.toString())
+
                     val fragmentPost = PostFragment()
                     fragmentPost.arguments = args
                     val fragment = fragment

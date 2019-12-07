@@ -93,7 +93,8 @@ class FeedFragment : Fragment(), View.OnClickListener {
                                         "@" + jObject.getString("Author"),
                                         jObject.getInt("LikesCount"),
                                         jObject.getString("Genre"),
-                                        returnedImage
+                                        returnedImage,
+                                        jObject.getInt("post_id")
                                     )
                                 )
                                 Log.v("shouldBeAfterFeed", feedSupplier.feedContent.size.toString())
