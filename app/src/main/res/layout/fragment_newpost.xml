@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
             android:layout_marginTop="30dp"
-            android:backgroundTint="@color/backgroundAddComment"
+            android:backgroundTint="@color/navColor"
             app:cardCornerRadius="10dp">
 
             <RelativeLayout
@@ -59,16 +59,25 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/inputTitle"
                     android:layout_centerHorizontal="true"
-                    android:backgroundTint="@android:color/darker_gray"
+                    android:backgroundTint="@color/backgroundAddComment"
                     android:padding="7dp"
                     android:text="Upload image"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Button" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:layout_centerInParent="true"
+                    android:layout_below="@+id/uploadImageButton"
+                    android:layout_marginTop="20dp"
+                    android:id="@+id/uploadImage"
+                    />
 
                 <TextView
                     android:id="@+id/textDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/uploadImageButton"
+                    android:layout_below="@+id/uploadImage"
                     android:layout_marginStart="20dp"
                     android:layout_marginTop="10dp"
                     android:text="Description: "
@@ -108,19 +117,45 @@
                     android:hint="Input your locaton..."
                     android:textSize="15sp" />
 
+                <TextView
+                    android:id="@+id/textTags"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/textLocation"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Tags:"
+                    android:textAlignment="center"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputTags"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/inputLocation"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_toRightOf="@+id/textLocation"
+                    android:hint="Input some tags..."
+                    android:textSize="15sp" />
+
+
+
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSubmit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/inputLocation"
+                    android:layout_below="@+id/inputTags"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="20dp"
-                    android:backgroundTint="@android:color/darker_gray"
+                    android:backgroundTint="@color/backgroundAddComment"
                     android:paddingHorizontal="30dp"
                     android:paddingVertical="5dp"
                     android:text="Submit"
                     android:textAppearance="@style/TextAppearance.MaterialComponents.Button" />
+
 
 
             </RelativeLayout>
@@ -128,13 +163,7 @@
 
         </androidx.cardview.widget.CardView>
 
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="50dp"
-            android:layout_marginTop="20dp"
-            android:id="@+id/uploadImage"
-            />
+
 
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
