@@ -7,7 +7,11 @@ import androidx.drawerlayout.widget.DrawerLayout
 import com.darthvader11.bandlink.R
 
 
-data class Post(var title: String, var post: String, var drb: Int , var drb2 : Int  , var city : String) {
+data class Post(var title: String,
+                var post: String,
+                var drb: Int ,
+                var drb2 : Int  ,
+                var city : String) {
 
 }
 

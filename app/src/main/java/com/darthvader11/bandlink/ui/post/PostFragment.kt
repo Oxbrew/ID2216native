@@ -2,18 +2,22 @@ package com.darthvader11.bandlink.ui.post
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.darthvader11.bandlink.R
+import com.darthvader11.bandlink.models.Feed
 import com.darthvader11.bandlink.models.Supplier
+import com.darthvader11.bandlink.models.feedSupplier
 import com.darthvader11.bandlink.ui.comment.CommentsFragment
 import com.darthvader11.bandlink.ui.home.HomeFragment
 import com.darthvader11.bandlink.ui.newpost.NewpostFragment
@@ -43,14 +47,29 @@ class PostFragment : Fragment(), View.OnClickListener {
             Supplier.comments[3].comment = args.getString("post_id").toString()
         }
 
+        var element: Feed = Feed(args?.getString("post_id")!!.toInt())
+        var index: Int = feedSupplier.feedContent.binarySearch(element)
 
+        element = feedSupplier.feedContent[index]
 
+        var postTitle = root.findViewById<TextView>(R.id.titleText)
+        postTitle.text = element.postTitle
+        var profilePic = root.findViewById<ImageView>(R.id.profilePic)
+        profilePic.setImageBitmap(element.profilePicture)
+        var postPic = root.findViewById<ImageView>(R.id.postPic)
+        postPic.setImageBitmap(element.postPic)
+        var postAuthor = root.findViewById<TextView>(R.id.profileText)
+        postAuthor.text = element.author
+        var postLikes = root.findViewById<TextView>(R.id.likesCount)
+        postLikes.text = element.likesCount.toString()
+        var postDescription = root.findViewById<TextView>(R.id.txtDescription)
+        postDescription.text = element.description
+        var postLocation = root.findViewById<TextView>(R.id.txtInputLoc)
+        postLocation.text = element.location
+        var postGenre = root.findViewById<TextView>(R.id.txtInputGenre)
+        postGenre.text = element.genre
 
-
-
-
-
-         Supplier.comments[1].comment = "This has been changed hahaa" //Testing
+        Supplier.comments[1].comment = "This has been changed hahaa" //Testing
 
 
         return root

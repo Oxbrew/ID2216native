@@ -92,8 +92,12 @@ class FeedFragment : Fragment(), View.OnClickListener {
                                         jObject.getString("Title"),
                                         "@" + jObject.getString("Author"),
                                         jObject.getInt("LikesCount"),
-                                        jObject.getString("Genre"),
+                                        jObject.getString("Tags"),
+                                        jObject.getString("Description"),
                                         returnedImage,
+                                        returnedImage,
+                                        jObject.getString("Location"),
+                                        jObject.getString("Genre"),
                                         jObject.getInt("post_id")
                                     )
                                 )

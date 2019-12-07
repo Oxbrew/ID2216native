@@ -25,7 +25,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="30dp"
+
             android:backgroundTint="@color/navColor"
             app:cardCornerRadius="10dp">
 
@@ -140,13 +140,38 @@
                     android:hint="Input some tags..."
                     android:textSize="15sp" />
 
+                <TextView
+                    android:id="@+id/textGenre"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp"
+                    android:layout_below="@+id/textTags"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:text="Genre:"
+                    android:textAlignment="center"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/inputGenre"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/inputTags"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="15dp"
+                    android:layout_toRightOf="@+id/textLocation"
+                    android:hint="Input some tags..."
+                    android:textSize="15sp" />
+
+
+
 
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnSubmit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/inputTags"
+                    android:layout_below="@+id/inputGenre"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
                     android:layout_marginBottom="20dp"

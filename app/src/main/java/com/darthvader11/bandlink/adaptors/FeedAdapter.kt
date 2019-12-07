@@ -60,7 +60,7 @@ class FeedAdapter (val context: Context, private val feedContent: List<Feed>, va
             feed?.let {
                 itemView.feedTitle.text = feed.postTitle
                 itemView.postAuthor.text = feed.author + " | "
-                itemView.postLikes.text = feed.likes.toString() + " likes | "
+                itemView.postLikes.text = feed.likesCount.toString() + " likes | "
                 itemView.postGenre.text = feed.genre
                 itemView.feedPic.setImageBitmap(feed.postPic)
             }

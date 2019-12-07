@@ -53,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@id/profileCardView"
-            android:layout_marginStart="67dp"
+            android:layout_marginStart="70dp"
             android:layout_marginTop="75dp"
             android:fontFamily="sans-serif-smallcaps"
             android:textSize="15sp"
@@ -85,7 +85,7 @@
             android:elevation="10dp"
             app:cardPreventCornerOverlap="false">
             <ImageView
-                android:contentDescription="postpi"
+                android:contentDescription="postpic"
                 android:id="@+id/postPic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -124,6 +124,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
                 android:paddingVertical="3.7dp"
+                android:id="@+id/likesCount"
                 android:text="@string/nr_likes"
 
                 />
@@ -172,6 +173,31 @@
             android:text="@string/location"
             android:layout_marginBottom="10dp"
             android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtFixedGenre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/actionButtons"
+            android:layout_alignLeft="@+id/txtInputGenre"
+            android:layout_marginStart="-45dp"
+            android:layout_marginBottom="9dp"
+            android:text="Genre:"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txtInputGenre"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/actionButtons"
+            android:layout_marginEnd="21dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginStart="88dp"
+            android:text="@string/location"
+            android:layout_marginBottom="10dp"
+            android:textStyle="bold" />
+
+
 
 
         <LinearLayout

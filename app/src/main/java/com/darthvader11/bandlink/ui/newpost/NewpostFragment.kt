@@ -32,11 +32,13 @@ import com.google.android.material.textfield.TextInputEditText
 
 class NewpostFragment : Fragment(), View.OnClickListener {
 
-    lateinit var post: Post
+    lateinit var post: Feed
     lateinit var title: TextInputEditText
     lateinit var description: TextInputEditText
     lateinit var location: TextInputEditText
     lateinit var author: String
+    lateinit var genre: TextInputEditText
+    lateinit var tags: TextInputEditText
     private val RESULT_LOAD_IMAGE = 1
     lateinit var imageToUpload: ImageView
 
@@ -64,6 +66,8 @@ class NewpostFragment : Fragment(), View.OnClickListener {
          author = user.username
          description = root.findViewById(R.id.inputDescription)
          location= root.findViewById(R.id.inputLocation)
+        tags = root.findViewById(R.id.inputTags)
+        genre = root.findViewById(R.id.inputGenre)
 
 
         return root
@@ -81,7 +85,15 @@ class NewpostFragment : Fragment(), View.OnClickListener {
 
                 var image: Bitmap = (imageToUpload.drawable.toBitmap())
 
-                post = Post(title.text.toString(), author , description.text.toString(),location.text.toString(), image)
+                post = Feed(title.text.toString(), author , 0,
+                    tags.text.toString(),
+                    description.text.toString(),
+                    image,
+                    image,
+                    location.text.toString(),
+                    genre.text.toString()
+                    )
+
 
                 Log.v("newpost", title.text.toString())
                 Log.v("newpost", description.text.toString())

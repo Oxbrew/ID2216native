@@ -45,7 +45,7 @@ class ServerRequest() {
         progressDialog.visibility = View.VISIBLE
         FetchUserDataAsyncTask(user, callback).execute()
     }
-    fun submitPost(post: Post){
+    fun submitPost(post: Feed){
         progressDialog.visibility = View.VISIBLE
         SubmitPostAsyncTask(post).execute()
     }
@@ -185,16 +185,16 @@ class ServerRequest() {
 
     }
 
-    inner class SubmitPostAsyncTask(post: Post) : AsyncTask<Void, Void, Void>() {
+    inner class SubmitPostAsyncTask(post: Feed) : AsyncTask<Void, Void, Void>() {
 
-        var post: Post = post
+        var post: Feed = post
 
 
         override fun doInBackground(vararg params: Void?): Void? {
 
 
             var byteArrayOutputStream = ByteArrayOutputStream()
-            post.image.compress(Bitmap.CompressFormat.JPEG, 100 , byteArrayOutputStream)
+            post.postPic?.compress(Bitmap.CompressFormat.JPEG, 100 , byteArrayOutputStream)
             var encodedImage: String = Base64.encodeToString(byteArrayOutputStream.toByteArray(), Base64.DEFAULT)
 
             var url = URL("http://calincapitanu.com/UploadPost.php")
@@ -207,11 +207,18 @@ class ServerRequest() {
 
 
             var builder: Uri.Builder = Uri.Builder()
-            builder.appendQueryParameter("Title", post.title)
+            builder.appendQueryParameter("Title", post.postTitle)
             builder.appendQueryParameter("Author", post.author)
+            builder.appendQueryParameter("LikesCount", post.likesCount.toString())
+            builder.appendQueryParameter("Tags", post.tags)
             builder.appendQueryParameter("Description", post.description)
+            builder.appendQueryParameter("Genre", post.genre)
             builder.appendQueryParameter("Location", post.location)
             builder.appendQueryParameter("Picture", encodedImage)
+            builder.appendQueryParameter("ProfilePicture", encodedImage)
+
+
+
 
             Log.v("Server", encodedImage)
             Log.v("Server", encodedImage.length.toString())
@@ -343,7 +350,7 @@ class ServerRequest() {
 
     }
 
-    inner class FetchPostDataAsyncTask(feed: Feed) : AsyncTask<Void, Void, Post>() {
+   /* inner class FetchPostDataAsyncTask(feed: Feed) : AsyncTask<Void, Void, Post>() {
 
         var feed: Feed = feed
 
@@ -405,7 +412,7 @@ class ServerRequest() {
         }
 
     }
-
+*/
 
 
 
