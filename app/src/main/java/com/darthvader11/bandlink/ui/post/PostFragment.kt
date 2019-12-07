@@ -37,6 +37,13 @@ class PostFragment : Fragment(), View.OnClickListener {
         btnApply.setOnClickListener(this)
         val backButton : ImageView = root.findViewById(R.id.backButton)
         backButton.setOnClickListener(this)
+
+        val args = arguments
+
+        if(args != null) {
+            Supplier.comments[3].comment = args.getString("post_id").toString()
+        }
+
          Supplier.comments[1].comment = "This has been changed hahaa" //Testing
 
 

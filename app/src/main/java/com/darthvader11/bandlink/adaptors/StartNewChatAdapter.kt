@@ -1,24 +1,22 @@
-package com.example.messagebox.View
+package com.darthvader11.bandlink.adaptors
 
-import android.app.Activity
-import android.content.Intent
+
 import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.darthvader11.bandlink.R
-import com.darthvader11.bandlink.ui.ChatActivity
-import com.darthvader11.bandlink.ui.StartNewChatActivity
 import com.darthvader11.bandlink.ui.messages.MessagesFragment
 import com.example.messagebox.Model.MessagePreview
+import kotlinx.android.synthetic.main.item_user.view.*
 import kotlinx.android.synthetic.main.message_box_list_item.view.*
+import kotlinx.android.synthetic.main.message_box_list_item.view.profile_picture
 
-class MessageBoxRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class StartNewChatAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     var items: List<MessagePreview> = ArrayList()
         private set
@@ -27,7 +25,7 @@ class MessageBoxRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 
         return MessageBoxPreviewViewHolder(
             LayoutInflater.from(parent.context).inflate(
-                R.layout.message_box_list_item,
+                R.layout.item_user,
                 parent,
                 false
             )
@@ -35,7 +33,7 @@ class MessageBoxRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
     }
 
     override fun getItemCount(): Int {
-       return items.size
+        return items.size
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
@@ -44,9 +42,6 @@ class MessageBoxRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
             is MessageBoxPreviewViewHolder -> {
                 holder.itemView.setOnClickListener {
                     //TODO: ADD CLICK LISTENERS
-
-                    val intent = Intent(holder.itemView.context, ChatActivity::class.java)
-                    holder.itemView.context.startActivity(intent)
                 }
                 holder.bind(items[position])
             }
@@ -60,17 +55,11 @@ class MessageBoxRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
     class MessageBoxPreviewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val profilePic = itemView.profile_picture
-        val senderLastMessage = itemView.sender_last_message
-        val senderName = itemView.sender_name
+        val senderName = itemView.contact_name
 
         fun bind(messagePreview: MessagePreview) {
 
             senderName.text = messagePreview.senderName
-            senderLastMessage.text = messagePreview.senderLastMessage
-
-            if (messagePreview.isRead) {
-                senderLastMessage.setTypeface(senderLastMessage.typeface, Typeface.BOLD);
-            }
 
             val requestOptions = RequestOptions()
                 .placeholder(R.drawable.ic_launcher_background)

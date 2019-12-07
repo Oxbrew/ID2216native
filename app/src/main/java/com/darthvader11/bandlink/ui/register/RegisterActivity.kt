@@ -10,7 +10,7 @@ import android.widget.EditText
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProviders
 import com.darthvader11.bandlink.R
-import com.darthvader11.bandlink.User
+import com.darthvader11.bandlink.Objects.User
 import com.darthvader11.bandlink.server.GetUserCallback
 import com.darthvader11.bandlink.server.ServerRequest
 import com.darthvader11.bandlink.ui.login.LoginActivity
@@ -101,7 +101,12 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.registerBtn -> {
-                var user: User = User(username.text.toString(), email.text.toString(), password.text.toString())
+                var user: User =
+                    User(
+                        username.text.toString(),
+                        email.text.toString(),
+                        password.text.toString()
+                    )
                 registerUser(user)
 
             }
@@ -110,7 +115,7 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
 
     private fun registerUser(user: User){
 
-        var serverRequest: ServerRequest = ServerRequest(this)
+        var serverRequest: ServerRequest = ServerRequest(this, R.layout.activity_register)
         Log.d("ServerDebug","got to registerUser")
         serverRequest.storeUserDataInBackground(user, object: GetUserCallback{
             override fun done(returnedUser: User?) {
