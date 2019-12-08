@@ -94,10 +94,10 @@ class MessagesFragment : Fragment() {
     }
 
     private fun populateSessions(response: Response) {
-        activity?.runOnUiThread {
             if (response.body != null) {
                 val jsonString = response.body!!.string()
                 val sessionResponseList: List<MessageSessionResponse> = Gson().fromJson(jsonString, Array<MessageSessionResponse>::class.java).toList()
+                activity?.runOnUiThread {
                 messagePreviewAdapter.submitList(sessionResponseList)
                 messagePreviewAdapter.notifyDataSetChanged()
             }

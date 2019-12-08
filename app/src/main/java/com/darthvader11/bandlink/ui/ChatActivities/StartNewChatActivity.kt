@@ -76,10 +76,10 @@ class StartNewChatActivity : AppCompatActivity() {
     }
 
     private fun populateUsers(response: Response) {
-        this.runOnUiThread {
             if (response.body != null) {
                 val jsonString = response.body!!.string()
                 val sessionResponseList: List<UserResponse> = Gson().fromJson(jsonString, Array<UserResponse>::class.java).toList()
+                this.runOnUiThread {
                 startNewCharAdapter.submitList(sessionResponseList)
                 startNewCharAdapter.notifyDataSetChanged()
             }

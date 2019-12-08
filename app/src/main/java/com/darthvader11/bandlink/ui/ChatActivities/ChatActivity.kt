@@ -121,10 +121,10 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun populateMessages(response: Response) {
-        this.runOnUiThread {
             if (response.body != null) {
                 val jsonString = response.body!!.string()
                 val messageResponseList: List<MessageResponseForSession> = Gson().fromJson(jsonString, Array<MessageResponseForSession>::class.java).toList()
+                this.runOnUiThread {
                 messageListAdapter.submitList(messageResponseList)
                 messageListAdapter.notifyDataSetChanged()
                 reyclerview_message_list.scrollToPosition(messageListAdapter.items.size - 1)
