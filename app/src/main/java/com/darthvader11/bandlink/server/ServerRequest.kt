@@ -13,6 +13,7 @@ import android.widget.RelativeLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.darthvader11.bandlink.Objects.Post
 import com.darthvader11.bandlink.Objects.User
+import com.darthvader11.bandlink.Objects.UserLocalStore
 import com.darthvader11.bandlink.models.Comment
 import com.darthvader11.bandlink.models.Feed
 import com.darthvader11.bandlink.models.feedSupplier
@@ -75,6 +76,23 @@ class ServerRequest() {
     fun fetchComments(post_id: Int, callback: GetCommentCallback){
         FetchCommentsAsyncTask(post_id,callback).execute()
     }
+
+    private fun getUserIdHidden(username: String, userCallback: GetUserIdCallback){
+        GetUserIdAsyncTask(username, userCallback).execute()
+    }
+
+    fun getUserId(context: Context) : Int{
+        var userlogin = UserLocalStore(context)
+        var username = userlogin.getLoggedInUser().username
+        var userId: Int = 0
+        getUserIdHidden(username, object : GetUserIdCallback{
+            override fun done(returnedUser: Int) {
+                userId = returnedUser
+            }
+        })
+        return userId
+    }
+
 
 
 
@@ -606,6 +624,57 @@ class ServerRequest() {
             commentCallback.done(result)
             //Log.v("shouldBeAfterFeed", feedSupplier.feedContent.size.toString())
             Log.v("JSONArray", "Array has been fetched")
+            super.onPostExecute(result)
+
+        }
+    }
+
+
+
+    inner class GetUserIdAsyncTask(username: String, userCallback: GetUserIdCallback) : AsyncTask<Void, Void, Int>() {
+
+        var username: String = username
+        var userCallBack:GetUserIdCallback = userCallback
+        override fun doInBackground(vararg params: Void?): Int {
+
+
+            var url: URL = URL("http://calincapitanu.com/GetUserId.php")
+            var httpConnection: HttpURLConnection = url.openConnection() as HttpURLConnection
+            httpConnection.requestMethod = "POST"
+            httpConnection.doOutput = true
+            httpConnection.doInput = true
+            httpConnection.connectTimeout = CONNECTION_TIMEOUT
+
+            var builder: Uri.Builder = Uri.Builder()
+            builder.appendQueryParameter("username", username)
+
+            var query: String = builder.build().encodedQuery as String
+
+
+            var os: OutputStream = httpConnection.outputStream
+            var bf = BufferedWriter(OutputStreamWriter(os, "UTF-8"))
+            bf.write(query)
+            bf.flush()
+            bf.close()
+
+
+            //Log.d("ServerDebug responseCode",httpConnection.responseCode.toString())
+            //Log.d("ServerDebug respondeMessage",httpConnection.responseMessage.toString())
+
+            var inputStream = httpConnection.inputStream
+            var bufferedReader = BufferedReader(InputStreamReader(inputStream, "UTF-8"))
+
+            var user_id = bufferedReader.readLine() as Int
+
+
+            httpConnection.disconnect()
+            return user_id
+        }
+
+
+        override fun onPostExecute(result: Int) {
+            progressDialog.visibility = View.INVISIBLE
+            userCallBack.done(result)
             super.onPostExecute(result)
 
         }
