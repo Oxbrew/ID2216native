@@ -14,8 +14,8 @@
         android:roundIcon="@mipmap/ic_launcher_shareapp_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.StartNewChatActivity" />
-        <activity android:name=".ui.ChatActivity" />
+        <activity android:name=".ui.ChatActivities.StartNewChatActivity" />
+        <activity android:name=".ui.ChatActivities.ChatActivity" />
 
 
         <activity
