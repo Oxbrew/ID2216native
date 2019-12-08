@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.darthvader11.bandlink.MessagingNetwork.MessageResponse
 import com.darthvader11.bandlink.MessagingNetwork.MessageResponseForSession
+import com.darthvader11.bandlink.Objects.user_id
 import com.darthvader11.bandlink.R
 import com.darthvader11.bandlink.data.model.DummyChatProvider
 import com.darthvader11.bandlink.data.model.User
@@ -67,7 +68,7 @@ class MessageListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         val userMessage = items[position]
 
-        if (userMessage.user_id == 20) {
+        if (userMessage.user_id == user_id.user_id) { //CHANGE USER ID HERE
             return VIEW_TYPE_MESSAGE_SENT
         }
         return VIEW_TYPE_MESSAGE_RECEIVED

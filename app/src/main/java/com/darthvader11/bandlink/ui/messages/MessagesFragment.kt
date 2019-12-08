@@ -15,6 +15,7 @@ import com.darthvader11.bandlink.MessagingNetwork.MessageRequest
 import com.darthvader11.bandlink.MessagingNetwork.MessageResponse
 import com.darthvader11.bandlink.MessagingNetwork.MessageSessionResponse
 import com.darthvader11.bandlink.MessagingNetwork.MessagingAPI
+import com.darthvader11.bandlink.Objects.user_id
 import com.darthvader11.bandlink.R
 import com.darthvader11.bandlink.ui.ChatActivities.StartNewChatActivity
 import com.example.messagebox.Model.DummyDataProvider
@@ -52,7 +53,7 @@ class MessagesFragment : Fragment() {
         initRecyclerView()
         initFabButton()
 
-        api.getSessions(20, object: Callback {
+        api.getSessions(user_id.user_id, object: Callback {
             override fun onResponse(call: Call, response: Response) {
                 populateSessions(response)
 
@@ -66,7 +67,7 @@ class MessagesFragment : Fragment() {
         messagesHandler.post(object : Runnable {
             override fun run() {
 
-                api.getSessions(20, object: Callback{
+                api.getSessions(user_id.user_id, object: Callback{
                     override fun onFailure(call: Call, e: IOException) {
                         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
                     }

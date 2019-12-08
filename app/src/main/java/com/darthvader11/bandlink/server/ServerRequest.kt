@@ -14,6 +14,7 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.darthvader11.bandlink.Objects.Post
 import com.darthvader11.bandlink.Objects.User
 import com.darthvader11.bandlink.Objects.UserLocalStore
+import com.darthvader11.bandlink.Objects.user_id
 import com.darthvader11.bandlink.models.Comment
 import com.darthvader11.bandlink.models.Feed
 import com.darthvader11.bandlink.models.feedSupplier
@@ -198,6 +199,8 @@ class ServerRequest() {
                 var username: String = jObject.getString("username")
                 Log.v("TEST", jObject.toString())
 
+                user_id.user_id = jObject.getString("user_id").toInt()
+                Log.v("Test", user_id.user_id.toString())
                 returnedUser = User(
                     username,
                     user.email,
@@ -657,6 +660,8 @@ class ServerRequest() {
             bf.flush()
             bf.close()
 
+            Log.v("TestUsername", username)
+
 
             //Log.d("ServerDebug responseCode",httpConnection.responseCode.toString())
             //Log.d("ServerDebug respondeMessage",httpConnection.responseMessage.toString())
@@ -664,10 +669,16 @@ class ServerRequest() {
             var inputStream = httpConnection.inputStream
             var bufferedReader = BufferedReader(InputStreamReader(inputStream, "UTF-8"))
 
-            var user_id = bufferedReader.readLine() as Int
 
+            var jArray = JSONArray(bufferedReader.readLine())
+            Log.v("TEST", jArray.toString())
+            var jObject = jArray.getJSONObject(0)
 
             httpConnection.disconnect()
+
+            var user_id = jObject.getString("user_id") as Int
+
+
             return user_id
         }
 

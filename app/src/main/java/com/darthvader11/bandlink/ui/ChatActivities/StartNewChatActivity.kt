@@ -48,20 +48,20 @@ class StartNewChatActivity : AppCompatActivity() {
         })
 
 
-        val editText = edittext_newchatbox
-        val sendButton: Button = button_newchatbox_send
-        sendButton.setOnClickListener {
-
-            val message = MessageRequest(editText.text.toString(), 21, 54)
-            api.postMessage(message, object: Callback {
-                override fun onResponse(call: Call, response: Response) {
-                    print(response.isSuccessful)
-                }
-                override fun onFailure(call: Call, e: IOException) {
-                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-                }
-            })
-        }
+//        val editText = edittext_newchatbox
+//        val sendButton: Button = button_newchatbox_send
+//        sendButton.setOnClickListener {
+//
+//            val message = MessageRequest(editText.text.toString(), 21, 54)
+//            api.postMessage(message, object: Callback {
+//                override fun onResponse(call: Call, response: Response) {
+//                    print(response.isSuccessful)
+//                }
+//                override fun onFailure(call: Call, e: IOException) {
+//                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//                }
+//            })
+//        }
     }
 
     private fun initRecyclerView() {
