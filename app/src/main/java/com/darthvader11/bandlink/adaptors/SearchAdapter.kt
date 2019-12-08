@@ -1,18 +1,23 @@
 package com.darthvader11.bandlink.adaptors
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.recyclerview.widget.RecyclerView
 import com.darthvader11.bandlink.R
 import com.darthvader11.bandlink.models.Feed
 import com.darthvader11.bandlink.models.Search
 import com.darthvader11.bandlink.showToast
+import com.darthvader11.bandlink.ui.feed.FeedFragment
+import com.darthvader11.bandlink.ui.post.PostFragment
 import kotlinx.android.synthetic.main.item_search.view.*
 
 
-class SearchAdapter(val context: Context, private val searchs: List<Feed>) :
+class SearchAdapter(val context: Context, private val searchs: List<Feed>, val fragment: Fragment) :
     RecyclerView.Adapter<SearchAdapter.MyViewHolder>() {
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
@@ -39,6 +44,19 @@ class SearchAdapter(val context: Context, private val searchs: List<Feed>) :
                 currentSearch?.let {
 
                     context.showToast(currentSearch!!.postTitle + " clicked!")
+
+                    val args = Bundle()
+                    args.putString("post_id", searchs[currentPosition].post_id.toString())
+
+                    val fragmentPost = PostFragment()
+                    fragmentPost.arguments = args
+                    val fragment = fragment
+                    val manager = fragment.fragmentManager
+                    val transaction: FragmentTransaction? = manager?.beginTransaction()
+                    transaction?.remove(FeedFragment())
+                    transaction?.replace(R.id.nav_host_fragment, fragmentPost, PostFragment::class.java.simpleName)
+                    transaction?.addToBackStack(null)
+                    transaction?.commit()
                 }
 
             }
