@@ -34,6 +34,9 @@ class ChatActivity : AppCompatActivity() {
         this.sessionID = intent.getIntExtra("sessionID",0)
         this.targetUserID = intent.getIntExtra("userID", 0)
 
+
+
+
         if (this.sessionID != 0) {
             getMessages(this.sessionID!!)
         } else {

@@ -101,6 +101,15 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
     override fun onClick(v: View?) {
         when(v?.id){
             R.id.registerBtn -> {
+                /*var serverRequest: ServerRequest = ServerRequest(this, R.layout.activity_register)
+                serverRequest.storeUserDataInBackground(user, object: GetUserCallback {
+                    override fun done(returnedUser: User?) {
+
+                    }
+                }
+
+                */
+
                 var user: User =
                     User(
                         username.text.toString(),
