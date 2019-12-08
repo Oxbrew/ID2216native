@@ -1,26 +1,20 @@
 package com.example.messagebox.View
 
-import android.app.Activity
 import android.content.Intent
-import android.graphics.Typeface
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.darthvader11.bandlink.MessagingNetwork.MessageSessionResponse
 import com.darthvader11.bandlink.R
-import com.darthvader11.bandlink.ui.ChatActivity
-import com.darthvader11.bandlink.ui.StartNewChatActivity
-import com.darthvader11.bandlink.ui.messages.MessagesFragment
-import com.example.messagebox.Model.MessagePreview
+import com.darthvader11.bandlink.ui.ChatActivities.ChatActivity
 import kotlinx.android.synthetic.main.message_box_list_item.view.*
 
 class MessageBoxRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    var items: List<MessagePreview> = ArrayList()
+    var items: List<MessageSessionResponse> = ArrayList()
         private set
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -43,9 +37,10 @@ class MessageBoxRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         when(holder) {
             is MessageBoxPreviewViewHolder -> {
                 holder.itemView.setOnClickListener {
-                    //TODO: ADD CLICK LISTENERS
-
                     val intent = Intent(holder.itemView.context, ChatActivity::class.java)
+                    val sessionID = items[position].id.toInt()
+                    intent.putExtra("sessionID", sessionID)
+ //                  intent.putExtra("targetUserID", items[position].id )
                     holder.itemView.context.startActivity(intent)
                 }
                 holder.bind(items[position])
@@ -53,8 +48,8 @@ class MessageBoxRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         }
     }
 
-    fun submitList(messageList: List<MessagePreview>) {
-        items = messageList
+    fun submitList(messageListResponse: List<MessageSessionResponse>) {
+        items = messageListResponse
     }
 
     class MessageBoxPreviewViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -63,14 +58,11 @@ class MessageBoxRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
         val senderLastMessage = itemView.sender_last_message
         val senderName = itemView.sender_name
 
-        fun bind(messagePreview: MessagePreview) {
+        fun bind(messagePreviewResponse: MessageSessionResponse) {
 
-            senderName.text = messagePreview.senderName
-            senderLastMessage.text = messagePreview.senderLastMessage
 
-            if (messagePreview.isRead) {
-                senderLastMessage.setTypeface(senderLastMessage.typeface, Typeface.BOLD);
-            }
+            senderName.text = messagePreviewResponse.messages[0].user_name
+            senderLastMessage.text = messagePreviewResponse.messages[messagePreviewResponse.messages.lastIndex].content
 
             val requestOptions = RequestOptions()
                 .placeholder(R.drawable.ic_launcher_background)
@@ -78,7 +70,7 @@ class MessageBoxRecyclerAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(
 
             Glide.with(itemView.context)
                 .applyDefaultRequestOptions(requestOptions)
-                .load(messagePreview.senderProfilePic)
+                .load(messagePreviewResponse.messages[0].profile_picture)
                 .into(profilePic)
         }
     }

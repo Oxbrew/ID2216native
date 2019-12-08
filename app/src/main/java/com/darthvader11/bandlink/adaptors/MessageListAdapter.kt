@@ -14,6 +14,8 @@ import java.time.format.FormatStyle
 import android.view.LayoutInflater
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
+import com.darthvader11.bandlink.MessagingNetwork.MessageResponse
+import com.darthvader11.bandlink.MessagingNetwork.MessageResponseForSession
 import com.darthvader11.bandlink.R
 import com.darthvader11.bandlink.data.model.DummyChatProvider
 import com.darthvader11.bandlink.data.model.User
@@ -26,7 +28,7 @@ class MessageListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val VIEW_TYPE_MESSAGE_SENT = 1
     private val VIEW_TYPE_MESSAGE_RECEIVED = 2
 
-    var items: List<UserMessage> = ArrayList()
+    var items: List<MessageResponseForSession> = ArrayList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view: View
@@ -64,27 +66,32 @@ class MessageListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun getItemViewType(position: Int): Int {
 
         val userMessage = items[position]
-        //TODO: UUID will be changed according to the BackEnd implementation
-        if (userMessage.sender.id == (UUID.fromString("5fc03087-d265-11e7-b8c6-83e29cd24f4c"))) {
+
+        if (userMessage.user_id == 20) {
             return VIEW_TYPE_MESSAGE_SENT
         }
         return VIEW_TYPE_MESSAGE_RECEIVED
 
     }
 
-    fun submitList(messageList: List<UserMessage>) {
+    fun submitList(messageList: List<MessageResponseForSession>) {
         items = messageList
     }
+
+//    fun addItemtoList(message: MessageResponse) {
+//        items.add(message)
+//        notifyDataSetChanged()
+//    }
 
     private inner class SentMessageHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         val messageText = itemView.received_text_message_body
         val timeText = itemView.received_text_message_time
 
-        fun bind(message: UserMessage) {
+        fun bind(message: MessageResponseForSession) {
 
-            messageText.text = message.message
-            timeText.text = message.createdAt.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT))
+            messageText.text = message.content
+            timeText.text = message.timestamp.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT))
         }
     }
 
@@ -96,18 +103,18 @@ class MessageListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val profileImage = itemView.image_message_profile
 
 
-        fun bind(message: UserMessage) {
+        fun bind(message: MessageResponseForSession) {
 
-            messageText.text = message.message
-            timeText.text = message.createdAt.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT))
-            nameText.text = message.sender.name
+            messageText.text = message.content
+            timeText.text = message.timestamp.format(DateTimeFormatter.ofLocalizedDateTime(FormatStyle.SHORT))
+            nameText.text = message.user_name
             val requestOptions = RequestOptions()
                 .placeholder(R.drawable.ic_launcher_background)
                 .error(R.drawable.ic_launcher_background)
 
             Glide.with(itemView.context)
                 .applyDefaultRequestOptions(requestOptions)
-                .load(message.sender.profilePic)
+                .load(message.profile_picture)
                 .into(profileImage)
 
         }

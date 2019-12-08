@@ -1,50 +1,39 @@
 package com.darthvader11.bandlink.ui.messages
 
 import android.content.Intent
-import android.graphics.Color
-import android.graphics.Typeface
 import android.graphics.drawable.ClipDrawable.HORIZONTAL
-import android.graphics.drawable.Drawable
-import android.graphics.drawable.GradientDrawable
-import android.graphics.drawable.ShapeDrawable
-import android.graphics.drawable.shapes.RoundRectShape
-import android.graphics.fonts.Font
-import android.graphics.fonts.FontStyle
-import android.opengl.Visibility
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
-import android.text.Layout
 import android.text.TextWatcher
 import android.view.*
-import android.widget.EditText
-import android.widget.PopupMenu
-import android.widget.TextClock
-import android.widget.TextView
-import androidx.constraintlayout.solver.widgets.Rectangle
-import androidx.core.view.isInvisible
-import androidx.core.view.isVisible
-import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import com.darthvader11.bandlink.MessagingNetwork.MessageRequest
+import com.darthvader11.bandlink.MessagingNetwork.MessageResponse
+import com.darthvader11.bandlink.MessagingNetwork.MessageSessionResponse
+import com.darthvader11.bandlink.MessagingNetwork.MessagingAPI
 import com.darthvader11.bandlink.R
-import com.darthvader11.bandlink.ui.ChatActivity
-import com.darthvader11.bandlink.ui.StartNewChatActivity
+import com.darthvader11.bandlink.ui.ChatActivities.StartNewChatActivity
 import com.example.messagebox.Model.DummyDataProvider
-import com.example.messagebox.Model.MessagePreview
 import com.example.messagebox.View.MessageBoxRecyclerAdapter
-import com.google.android.material.floatingactionbutton.FloatingActionButton
-import kotlinx.android.synthetic.main.activity_messega_box.*
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_messega_box.recycler_view
 import kotlinx.android.synthetic.main.fragment_messages.*
-import kotlinx.android.synthetic.main.fragment_messages.view.*
-import kotlinx.android.synthetic.main.fragment_profile.*
-import kotlinx.android.synthetic.main.message_box_list_item.*
+import okhttp3.Call
+import okhttp3.Callback
+import okhttp3.Response
+import okhttp3.internal.toImmutableList
+import java.io.IOException
 
 class MessagesFragment : Fragment() {
 
     private lateinit var messagePreviewAdapter: MessageBoxRecyclerAdapter
+    private val api = MessagingAPI()
+    private val messagesHandler = Handler(Looper.getMainLooper())
+
 
     override fun onCreateView(
 
@@ -62,9 +51,35 @@ class MessagesFragment : Fragment() {
 
         initRecyclerView()
         initFabButton()
+
+        api.getSessions(20, object: Callback {
+            override fun onResponse(call: Call, response: Response) {
+                populateSessions(response)
+
+            }
+            override fun onFailure(call: Call, e: IOException) {
+                println(e)
+            }
+        })
         setSearchBar()
-        messagePreviewAdapter.submitList(DummyDataProvider.dummyMessagePreview())
+
+        messagesHandler.post(object : Runnable {
+            override fun run() {
+
+                api.getSessions(20, object: Callback{
+                    override fun onFailure(call: Call, e: IOException) {
+                        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+                    }
+                    override fun onResponse(call: Call, response: Response) {
+                        populateSessions(response)
+                    }
+                })
+
+                messagesHandler.postDelayed(this, 1000)
+            }
+        })
     }
+
 
     private fun initRecyclerView() {
 
@@ -78,10 +93,32 @@ class MessagesFragment : Fragment() {
 
     }
 
-    private fun initFabButton() {
+    private fun populateSessions(response: Response) {
+        activity?.runOnUiThread {
+            if (response.body != null) {
+                val jsonString = response.body!!.string()
+                val sessionResponseList: List<MessageSessionResponse> = Gson().fromJson(jsonString, Array<MessageSessionResponse>::class.java).toList()
+                messagePreviewAdapter.submitList(sessionResponseList)
+                messagePreviewAdapter.notifyDataSetChanged()
+            }
+        }
+    }
 
+    private fun initFabButton() {
         val floatingActionButton = fabMessages
         floatingActionButton.setOnClickListener {
+
+//            val message = MessageRequest("testtestetsetsetsetse", 21, 54)
+//
+//            api.postMessage(message, object: Callback {
+//                override fun onResponse(call: Call, response: Response) {
+//                    print(response.isSuccessful)
+//                }
+//                override fun onFailure(call: Call, e: IOException) {
+//                    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+//                }
+//            })
+
             val intent = Intent(activity, StartNewChatActivity::class.java)
             startActivity(intent)
         }
@@ -89,39 +126,46 @@ class MessagesFragment : Fragment() {
 
     private fun setSearchBar() {
 
-        val editText = edit_text_of_message_search
-
-        editText.addTextChangedListener(object : TextWatcher {
-
-            override fun afterTextChanged(p0: Editable?) {
-
-                var list = ArrayList<MessagePreview>()
-
-                messagePreviewAdapter.items.forEach { element ->
-                    p0?.let {
-                        if (element.senderName.length >= it.length && it.isNotEmpty() ){
-                            if (element.senderName.contains(it.subSequence(0,it.length), ignoreCase = true)) {
-                                list.add(element)
-                                messagePreviewAdapter.submitList(list)
-                                messagePreviewAdapter.notifyDataSetChanged()
-                            } else {
-                                messagePreviewAdapter.submitList(list)
-                                messagePreviewAdapter.notifyDataSetChanged()
-                            }
-                        }
-                    }
-                }
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                messagePreviewAdapter.submitList(DummyDataProvider.dummyMessagePreview())
-                messagePreviewAdapter.notifyDataSetChanged()
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-        })
+//        val editText = edit_text_of_message_search
+//
+//        editText.addTextChangedListener(object : TextWatcher {
+//
+//            override fun afterTextChanged(p0: Editable?) {
+//
+//                var list = ArrayList<MessageSessionResponse>()
+//
+//                messagePreviewAdapter.items.forEach { element ->
+//                    p0?.let {
+//                        if (element.messages[0]..length >= it.length && it.isNotEmpty() ){
+//                            if (element.messages[0].username.contains(it.subSequence(0,it.length), ignoreCase = true)) {
+//                                list.add(element)
+//                                messagePreviewAdapter.submitList(list)
+//                                messagePreviewAdapter.notifyDataSetChanged()
+//                            } else {
+//                                messagePreviewAdapter.submitList(list)
+//                                messagePreviewAdapter.notifyDataSetChanged()
+//                            }
+//                        }
+//                    }
+//                }
+//            }
+//
+//            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+////                api.getSessions(21, object: Callback {
+////                    override fun onResponse(call: Call, response: Response) {
+////                        populateSessions(response)
+////                    }
+////                    override fun onFailure(call: Call, e: IOException) {
+////                        println(e)
+////                    }
+////                })
+//            }
+//
+//            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+//
+//            }
+//        })
+//    }
     }
 }
 
