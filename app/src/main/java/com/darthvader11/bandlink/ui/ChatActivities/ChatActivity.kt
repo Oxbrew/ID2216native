@@ -9,9 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.darthvader11.bandlink.MessagingNetwork.*
 import com.darthvader11.bandlink.R
 import com.darthvader11.bandlink.adaptors.MessageListAdapter
+import com.darthvader11.bandlink.server.ServerRequest
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_message_list.*
-
 import okhttp3.Call
 import okhttp3.Callback
 import okhttp3.Response
@@ -31,6 +31,10 @@ class ChatActivity : AppCompatActivity() {
 
         initRecyclerView()
 
+//        var serverRequest1 = ServerRequest(this, R.layout.activity_message_list)
+//        val a = serverRequest1.getUserId(this)
+//
+//        println(a)
         this.sessionID = intent.getIntExtra("sessionID",0)
         this.targetUserID = intent.getIntExtra("userID", 0)
 
