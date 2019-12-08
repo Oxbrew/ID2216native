@@ -13,6 +13,7 @@ import android.widget.RelativeLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.darthvader11.bandlink.Objects.Post
 import com.darthvader11.bandlink.Objects.User
+import com.darthvader11.bandlink.models.Comment
 import com.darthvader11.bandlink.models.Feed
 import com.darthvader11.bandlink.models.feedSupplier
 import org.json.JSONArray
@@ -67,6 +68,14 @@ class ServerRequest() {
     fun checkLikes(user: String, post_id: Int, callback: GetLikeCallback){
         CheckLikesAsyncTask(user,post_id, callback).execute()
     }
+    fun addComment(comment: Comment, post_id: Int){
+        AddCommentAsyncTask(comment,post_id).execute()
+    }
+
+    fun fetchComments(post_id: Int, callback: GetCommentCallback){
+        FetchCommentsAsyncTask(post_id,callback).execute()
+    }
+
 
 
 
@@ -284,8 +293,8 @@ class ServerRequest() {
 
 
             Log.v("ServerDebug", httpConnection.responseCode.toString())
-
             return BitmapFactory.decodeStream(httpConnection.getContent() as InputStream, null, null)
+
 
         }
 
@@ -349,6 +358,7 @@ class ServerRequest() {
                 Log.v("download", jObject.getString("Title"))
             }
             Log.v("JARRAY", jArray.length().toString())*/
+            httpConnection.disconnect()
             return jArray
         }
 
@@ -397,6 +407,7 @@ class ServerRequest() {
 
             Log.d("ServerDebug",httpConnection.responseCode.toString())
             Log.d("ServerDebug",httpConnection.responseMessage.toString())
+            httpConnection.disconnect()
 
             return null
         }
@@ -451,6 +462,8 @@ class ServerRequest() {
             Log.v("TEEEST", jObject.getString("post_id"))
             Log.v("TEEEST", jObject.getString("user"))
 
+            httpConnection.disconnect()
+
             if(jObject.getString("post_id").equals("NOT_FOUND") &&
                 jObject.getString("user").equals("NOT_FOUND"))
                 return true
@@ -461,6 +474,140 @@ class ServerRequest() {
             super.onPostExecute(returned)
             likeCallback.done(returned)
             Log.v("updatelikes", "Likes Updated")
+        }
+    }
+
+    inner class AddCommentAsyncTask(comment: Comment, post_id: Int) : AsyncTask<Void, Void, Void?>() {
+
+        var comment: Comment = comment
+        var post_id: Int = post_id
+
+
+        override fun doInBackground(vararg params: Void?): Void? {
+
+
+            var builder: Uri.Builder = Uri.Builder()
+
+            builder.appendQueryParameter("author", comment.author)
+            builder.appendQueryParameter("comment", comment.comment)
+            builder.appendQueryParameter("post_id", post_id.toString())
+
+            Log.v("commentTesting", post_id.toString())
+            Log.v("commentTesting", comment.author)
+            Log.v("commentTesting", comment.comment)
+
+            var query: String = builder.build().encodedQuery as String
+
+
+
+            var url: URL = URL("http://calincapitanu.com/AddComment.php")
+            var httpConnection: HttpURLConnection = url.openConnection() as HttpURLConnection
+            httpConnection.requestMethod = "POST"
+            httpConnection.doOutput = true
+            httpConnection.doInput = true
+            httpConnection.connectTimeout = CONNECTION_TIMEOUT
+
+
+            Log.v("commentTesting", query)
+
+            var os: OutputStream = httpConnection.outputStream
+            var bf = BufferedWriter(OutputStreamWriter(os, "UTF-8"))
+            bf.write(query)
+            bf.flush()
+            bf.close()
+
+
+            Log.d("ServerDebug",httpConnection.responseCode.toString())
+            Log.d("ServerDebug",httpConnection.responseMessage.toString())
+
+            httpConnection.disconnect()
+
+            return null
+        }
+
+        override fun onPostExecute(returned: Void?) {
+            super.onPostExecute(returned)
+            Log.v("updatelikes", "Likes Updated")
+        }
+    }
+
+    inner class FetchCommentsAsyncTask(post_id: Int, commentCallback: GetCommentCallback) : AsyncTask<Void, Void, JSONArray>() {
+
+        var commentCallback: GetCommentCallback = commentCallback
+        var post_id: Int = post_id
+
+        override fun doInBackground(vararg params: Void?): JSONArray {
+
+
+            var url: URL = URL("http://calincapitanu.com/FetchComments.php")
+            var httpConnection: HttpURLConnection = url.openConnection() as HttpURLConnection
+            httpConnection.requestMethod = "POST"
+            httpConnection.doOutput = true
+            httpConnection.doInput = true
+            httpConnection.connectTimeout = CONNECTION_TIMEOUT
+
+            var builder: Uri.Builder = Uri.Builder()
+            builder.appendQueryParameter("post_id", post_id.toString())
+
+            var query: String = builder.build().encodedQuery as String
+
+
+            var os: OutputStream = httpConnection.outputStream
+            var bf = BufferedWriter(OutputStreamWriter(os, "UTF-8"))
+            bf.write(query)
+            bf.flush()
+            bf.close()
+
+
+            //Log.d("ServerDebug responseCode",httpConnection.responseCode.toString())
+            //Log.d("ServerDebug respondeMessage",httpConnection.responseMessage.toString())
+
+            var inputStream = httpConnection.inputStream
+            var bufferedReader = BufferedReader(InputStreamReader(inputStream, "UTF-8"))
+            var jArray = JSONArray(bufferedReader.readLine())
+
+            Log.v("JSONArray", jArray.toString())
+            Log.v("JSONArray length", jArray.length().toString())
+
+
+/*
+            for(i in 0 until jArray.length()){
+                Log.v("jobject",jArray[i].toString())
+                var jObject: JSONObject = jArray[i] as JSONObject
+
+                downloadImage(jObject.getString("Title"), object: GetPostCallback{
+                    override fun done(returnedImage: Bitmap?) {
+                        if(returnedImage != null) {
+                            feedSupplier.feedContent.add(
+                                Feed(
+                                    jObject.getString("Title"),
+                                    "@" + jObject.getString("Author"),
+                                    jObject.getInt("LikesCount"),
+                                    jObject.getString("Genre"),
+                                    returnedImage
+                                )
+                            )
+                            Log.v("shouldBeAfterFeed", feedSupplier.feedContent.size.toString())
+                            Log.v("added", "one feed item has been added")
+                        }
+                    }
+                })
+
+                Log.v("download", jObject.getString("Title"))
+            }
+            Log.v("JARRAY", jArray.length().toString())*/
+            httpConnection.disconnect()
+            return jArray
+        }
+
+
+        override fun onPostExecute(result: JSONArray) {
+            progressDialog.visibility = View.INVISIBLE
+            commentCallback.done(result)
+            //Log.v("shouldBeAfterFeed", feedSupplier.feedContent.size.toString())
+            Log.v("JSONArray", "Array has been fetched")
+            super.onPostExecute(result)
+
         }
     }
 

@@ -2,6 +2,7 @@ package com.darthvader11.bandlink.ui.search
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,7 +56,7 @@ class SearchFragment : Fragment(), View.OnClickListener {
         val layoutManager = LinearLayoutManager(context)
         layoutManager.orientation = LinearLayoutManager.VERTICAL
         recyclerSearch.layoutManager = layoutManager
-        adapter = SearchAdapter(context!!, Supplier2.searchResults)
+        adapter = SearchAdapter(context!!, Supplier2.searchResults, this)
         recyclerSearch.adapter = adapter
 
 
@@ -72,6 +73,7 @@ class SearchFragment : Fragment(), View.OnClickListener {
                     return
                 }
                 for(element: Feed in feedSupplier.feedContent){
+                    Log.v("searchtest", element.postTitle)
                     if(element.genre.contains(searchText)) {
                         Supplier2.searchResults.add(element)
                         continue

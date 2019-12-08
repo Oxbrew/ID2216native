@@ -38,7 +38,7 @@ class CommentsAdapter(val context: Context, private val comments: List<Comment>)
             itemView.setOnClickListener {
                 currentComment?.let {
 
-                    context.showToast(currentComment!!.title + " clicked!")
+                    context.showToast(currentComment!!.author + " clicked!")
                 }
 
             }
@@ -47,9 +47,9 @@ class CommentsAdapter(val context: Context, private val comments: List<Comment>)
 
         fun setData(comment: Comment?, pos: Int) {
             comment?.let {
-                itemView.txtProfile.text = comment.title
+                itemView.txtProfile.text = comment.author
                 itemView.txtComment.text = comment.comment
-                itemView.profilePic.setImageResource(comment.drb)
+                //itemView.profilePic.setImageResource(comment.drb)
             }
             this.currentComment = comment
             this.currentPosition = pos

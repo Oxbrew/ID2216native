@@ -38,6 +38,7 @@ class PostFragment : Fragment(), View.OnClickListener {
     lateinit var element: Feed
     lateinit var postLikes: TextView
     lateinit var user: User
+    lateinit var argsComment: Bundle
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,11 +60,14 @@ class PostFragment : Fragment(), View.OnClickListener {
         likeButton.setOnClickListener(this)
 
 
-        val args = arguments
+        var args = arguments
+        argsComment = Bundle()
+        argsComment.putString("post_id", args!!.get("post_id").toString())
 
-        if(args != null) {
-            Supplier.comments[3].comment = args.getString("post_id").toString()
-        }
+
+        //if(args != null) {
+          //  Supplier.comments[3].comment = args.getString("post_id").toString()
+        //}
 
         element = Feed(args?.getString("post_id")!!.toInt())
         var index: Int = feedSupplier.feedContent.binarySearch(element)
@@ -87,7 +91,6 @@ class PostFragment : Fragment(), View.OnClickListener {
         var postGenre = root.findViewById<TextView>(R.id.txtInputGenre)
         postGenre.text = element.genre
 
-        Supplier.comments[1].comment = "This has been changed hahaa" //Testing
 
         var userlogin: UserLocalStore = UserLocalStore(context!!)
         user = userlogin.getLoggedInUser()
@@ -105,9 +108,11 @@ class PostFragment : Fragment(), View.OnClickListener {
             }
             R.id.btnComment -> {
                 Toast.makeText(context, "DIZ WORKS", Toast.LENGTH_SHORT).show()
+                var commentsFragment = CommentsFragment()
+                commentsFragment.arguments = argsComment
                 val manager: FragmentManager? = fragmentManager
                 val transaction: FragmentTransaction? = manager?.beginTransaction()
-                transaction?.replace(R.id.nav_host_fragment, CommentsFragment() , CommentsFragment::class.java.simpleName  )
+                transaction?.replace(R.id.nav_host_fragment, commentsFragment , CommentsFragment::class.java.simpleName  )
                 transaction?.addToBackStack(null)
                 transaction?.commit()
             }
