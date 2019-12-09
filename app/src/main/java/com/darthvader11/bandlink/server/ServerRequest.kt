@@ -193,18 +193,18 @@ class ServerRequest() {
             var bufferedReader = BufferedReader(InputStreamReader(inputStream, "UTF-8"))
             var jObject: JSONObject = JSONObject(bufferedReader.readLine())
 
-
+            Log.v("user_id", jObject.toString())
             if(jObject.length() != 0){
                 Log.v("happened", "2")
                 var username: String = jObject.getString("username")
                 Log.v("TEST", jObject.toString())
+                var user_id: Int = jObject.getInt("user_id")
 
-                user_id.user_id = jObject.getString("user_id").toInt()
-                Log.v("Test", user_id.user_id.toString())
                 returnedUser = User(
                     username,
                     user.email,
-                    user.password
+                    user.password,
+                    user_id
                 )
             }
             else throw Exception("JOBJECT FAULT")
@@ -676,7 +676,7 @@ class ServerRequest() {
 
             httpConnection.disconnect()
 
-            var user_id = jObject.getString("user_id") as Int
+            var user_id = jObject.getInt("user_id")
 
 
             return user_id

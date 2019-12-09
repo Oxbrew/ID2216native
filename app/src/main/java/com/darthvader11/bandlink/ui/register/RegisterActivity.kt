@@ -114,7 +114,8 @@ class RegisterActivity : AppCompatActivity(), View.OnClickListener {
                     User(
                         username.text.toString(),
                         email.text.toString(),
-                        password.text.toString()
+                        password.text.toString(),
+                        0
                     )
                 registerUser(user)
 

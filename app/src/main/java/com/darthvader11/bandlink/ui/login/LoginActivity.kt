@@ -21,6 +21,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.darthvader11.bandlink.R
 import com.darthvader11.bandlink.Objects.User
 import com.darthvader11.bandlink.Objects.UserLocalStore
+import com.darthvader11.bandlink.Objects.user_id
 import com.darthvader11.bandlink.server.GetUserCallback
 import com.darthvader11.bandlink.server.ServerRequest
 import com.darthvader11.bandlink.ui.register.RegisterActivity
@@ -155,7 +156,10 @@ class LoginActivity : AppCompatActivity(), View.OnClickListener {
 
         editor.putString("email", email.text.toString())
         editor.putString("password", password.text.toString())
+        editor.putInt("user_id", user.user_id)
         editor.apply()
+
+        user_id.user_id = user.user_id
 
 
         val intent = Intent(this , com.darthvader11.bandlink.MainActivity::class.java)

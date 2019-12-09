@@ -1,5 +1,6 @@
 package com.darthvader11.bandlink.ui.messages
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ClipDrawable.HORIZONTAL
 import android.os.Bundle
@@ -7,6 +8,7 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -22,6 +24,7 @@ import com.example.messagebox.Model.DummyDataProvider
 import com.example.messagebox.View.MessageBoxRecyclerAdapter
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_messega_box.recycler_view
+import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.fragment_messages.*
 import okhttp3.Call
 import okhttp3.Callback
@@ -43,6 +46,8 @@ class MessagesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val root = inflater.inflate(R.layout.fragment_messages, container, false)
+        Log.v("user_id",user_id.toString())
+
         return root
 
     }
@@ -52,7 +57,7 @@ class MessagesFragment : Fragment() {
 
         initRecyclerView()
         initFabButton()
-
+        Log.v("user_id", user_id.user_id.toString())
         api.getSessions(user_id.user_id, object: Callback {
             override fun onResponse(call: Call, response: Response) {
                 populateSessions(response)
@@ -66,6 +71,7 @@ class MessagesFragment : Fragment() {
 
         messagesHandler.post(object : Runnable {
             override fun run() {
+
 
                 api.getSessions(user_id.user_id, object: Callback{
                     override fun onFailure(call: Call, e: IOException) {

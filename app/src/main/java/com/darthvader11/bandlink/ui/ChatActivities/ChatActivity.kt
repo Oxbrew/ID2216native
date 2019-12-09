@@ -1,5 +1,6 @@
 package com.darthvader11.bandlink.ui.ChatActivities
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -8,6 +9,8 @@ import android.util.Log
 import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.darthvader11.bandlink.MessagingNetwork.*
+import com.darthvader11.bandlink.Objects.UserLocalStore
+import com.darthvader11.bandlink.Objects.user_id
 import com.darthvader11.bandlink.R
 import com.darthvader11.bandlink.adaptors.MessageListAdapter
 import com.darthvader11.bandlink.server.GetUserCallback
@@ -44,6 +47,9 @@ class ChatActivity : AppCompatActivity() {
         //var serverRequest: ServerRequest = ServerRequest(this, R.layout.fragment_messages)
         //Log.v("userIdTest",serverRequest.getUserId(this).toString())
         Log.v("TESSST", "cmon pls?")
+        var sharedPreferences = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
+        var user_id: Int = sharedPreferences.getInt("user_id", 0)
+        Log.v("user_id",user_id.toString())
 
 
         if (this.sessionID != 0) {
@@ -52,7 +58,7 @@ class ChatActivity : AppCompatActivity() {
             val targetUserId = this.targetUserID
             print("###### TargetUserId = $targetUserId")
             if (targetUserId != 0) {
-                val messageSessionRequest = MessageSessionRequest(21, targetUserId!!)
+                val messageSessionRequest = MessageSessionRequest(user_id, targetUserId!!)
                 api.postSession(messageSessionRequest, object: Callback {
                     override fun onFailure(call: Call, e: IOException) {
                         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -77,7 +83,7 @@ class ChatActivity : AppCompatActivity() {
         sendButton.setOnClickListener {
 
             if (sessionID!! != 0) {
-                val message = MessageRequest(editText.text.toString(), 21, sessionID!!)
+                val message = MessageRequest(editText.text.toString(), user_id, sessionID!!)
 
                 api.postMessage(message, object : Callback {
                     override fun onResponse(call: Call, response: Response) {

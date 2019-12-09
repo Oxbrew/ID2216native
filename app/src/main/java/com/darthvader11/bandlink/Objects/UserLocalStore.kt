@@ -25,10 +25,12 @@ class UserLocalStore {
         var username: String? = userLocalDatabase.getString("name", "")
         var password : String? = userLocalDatabase.getString("password", "")
         var mail : String? = userLocalDatabase.getString("email", "")
+        var user_id : Int? = userLocalDatabase.getInt("user_id", 0)
         return User(
             username.toString(),
             mail.toString(),
-            password.toString()
+            password.toString(),
+            user_id!!
         )
     }
 
